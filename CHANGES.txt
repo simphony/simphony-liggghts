@@ -1,0 +1,6 @@
+simphony-liggghts CHANGELOG
+======================
+
+Release 0.1.0
+-------------
+* Initial release: basic running of LIGGGHTS
