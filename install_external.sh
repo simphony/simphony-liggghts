@@ -10,18 +10,17 @@ PYTHON_LIB_DIR=${PYTHON_LIB_DIR:-$VIRTUAL_ENV/lib/python2.7/site-packages/}
 echo "Checking out the most recent release of liggghts - 3.4.0 from 17 May 2016"
 git clone --branch 3.4.0 --depth 1 git://github.com/CFDEMproject/LIGGGHTS-PUBLIC.git myliggghts
 
-echo "Building LIGGGHTS executable"
-pushd myliggghts/src
-
+pushd myliggghts
 # Apply our patch to rename namespaces and lammps references with liggghts ones
-git apply ../../liggghts.patch
+git apply ../liggghts.patch
 echo "Patched liggghts source code"
-
-make -j 2 fedora
-ln -s lgt_fedora liggghts
 popd
 
+echo "Building LIGGGHTS executable"
 pushd myliggghts/src
+make -j 2 fedora
+ln -s lgt_fedora liggghts
+
 echo "Making shared library for LIGGGHTS python wrapper"
 make makeshlib
 make  -j 2 -f Makefile.shlib fedora_fpic
@@ -32,6 +31,6 @@ echo "Installing LIGGGHTS python wrapper"
 pushd myliggghts/python
 # The install script expects `liggghts.py` name.
 cp lammps.py liggghts.py
-python install.py $PYTHON_LIB_DIR 
+python install.py $PYTHON_LIB_DIR $PYTHON_LIB_DIR
 popd
 python check_liggghts_python.py
