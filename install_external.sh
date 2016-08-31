@@ -14,7 +14,7 @@ echo "Building LIGGGHTS executable"
 pushd myliggghts/src
 
 # Apply our patch to rename namespaces and lammps references with liggghts ones
-git apply ../liggghts.patch
+git apply ../../liggghts.patch
 echo "Patched liggghts source code"
 
 make -j 2 fedora
