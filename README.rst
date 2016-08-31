@@ -4,16 +4,16 @@ simphony-liggghts
 The LIGGGHTS engine-wrapper for the SimPhoNy framework (www.simphony-project.eu).
 
 .. image:: https://travis-ci.org/simphony/simphony-liggghts.svg?branch=master
-    :target: https://travis-ci.org/simphony/simphony-liggghts
-      :alt: Build status
+   :target: https://travis-ci.org/simphony/simphony-liggghts
+   :alt: Build status
 
 .. image:: http://codecov.io/github/simphony/simphony-liggghts/coverage.svg?branch=master
    :target: http://codecov.io/github/simphony/simphony-liggghts?branch=master
-      :alt: Test coverage
+   :alt: Test coverage
 
 .. image:: https://readthedocs.org/projects/simphony-liggghts/badge/?version=master
    :target: https://readthedocs.org/projects/simphony-liggghts/?badge=master
-      :alt: Documentation Status
+   :alt: Documentation Status
 
 
 Repository
