@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = simlammps
+source = simliggghts
 omit = */tests/*
        */bench/*    
 
