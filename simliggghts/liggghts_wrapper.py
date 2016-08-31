@@ -58,22 +58,14 @@ class LiggghtsWrapper(ABCModelingEngine):
 
         self._use_internal_interface = use_internal_interface
 
-        atom_style = AtomStyle.GRANULAR #\
-        #    if engine_type == EngineType.DEM else AtomStyle.ATOMIC
-        self._executable_name = "liggghts" #\
-        #    if engine_type == EngineType.DEM else "lammps"
+        atom_style = AtomStyle.GRANULAR
+        self._executable_name = "liggghts"
         self._script_writer = ScriptWriter(atom_style)
 
         if self._use_internal_interface:
-            #if engine_type == EngineType.DEM:
-            #raise RuntimeError("DEM using the INTERNAL interface is not yet supported")
-            
             import liggghts
-            
             self._lammps = liggghts.liggghts(cmdargs=["-screen", "none",
                                                  "-log", "none"])
-            
-            self._lammps = liggghts.liggghts()
             self._data_manager = LammpsInternalDataManager(self._lammps,
                                                            atom_style)
             
