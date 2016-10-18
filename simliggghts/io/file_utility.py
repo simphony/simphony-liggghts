@@ -4,19 +4,19 @@ from simphony.core.cuba import CUBA
 from simphony.core.cuds_item import CUDSItem
 
 from ..common import globals
-from .lammps_data_file_parser import LammpsDataFileParser
-from .lammps_simple_data_handler import LammpsSimpleDataHandler
-from .lammps_data_line_interpreter import LammpsDataLineInterpreter
+from .liggghts_data_file_parser import LiggghtsDataFileParser
+from .liggghts_simple_data_handler import LiggghtsSimpleDataHandler
+from .liggghts_data_line_interpreter import LiggghtsDataLineInterpreter
 from ..config.domain import get_box
 from ..cuba_extension import CUBAExtension
 from ..common.atom_style import (AtomStyle, get_atom_style)
-from .lammps_data_file_writer import LammpsDataFileWriter
+from .liggghts_data_file_writer import LiggghtsDataFileWriter
 
 
 def read_data_file(filename, atom_style=None):
-    """ Reads LAMMPS data file and create CUDS objects
+    """ Reads liggghts data file and create CUDS objects
 
-    Reads LAMMPS data file and create list of Particles. The returned list
+    Reads liggghts data file and create list of Particles. The returned list
     of Particles will contain a Particles for each atom type (i.e.
     CUBA.MATERIAL_TYPE). The name of the Particles will be the atom type (e.g.
     a Particles with atom_type/CUBA.MATERIAL_TYPE of 1 will have the name "1")
@@ -29,7 +29,7 @@ def read_data_file(filename, atom_style=None):
     Parameters
     ----------
     filename : str
-        filename of lammps data file
+        filename of liggghts data file
 
     atom_style : AtomStyle
         type of atoms in the file.  If None, then an attempt of
@@ -43,8 +43,8 @@ def read_data_file(filename, atom_style=None):
         particles of that type.
 
     """
-    handler = LammpsSimpleDataHandler()
-    parser = LammpsDataFileParser(handler=handler)
+    handler = LiggghtsSimpleDataHandler()
+    parser = LiggghtsDataFileParser(handler=handler)
 
     parser.parse(filename)
 
@@ -54,7 +54,7 @@ def read_data_file(filename, atom_style=None):
             if handler.get_atom_type()
             else AtomStyle.GRANULAR)
 
-    interpreter = LammpsDataLineInterpreter(atom_style)
+    interpreter = LiggghtsDataLineInterpreter(atom_style)
 
     types = (atom_t for atom_t in range(1, handler.get_number_atom_types()+1))
     atoms = handler.get_atoms()
@@ -82,9 +82,9 @@ def read_data_file(filename, atom_style=None):
         type_to_particles_map[atom_type] = particles
 
     # add each particle to each Particles
-    for lammps_id, values in atoms.iteritems():
+    for liggghts_id, values in atoms.iteritems():
         coordinates, data = interpreter.convert_atom_values(values)
-        data.update(interpreter.convert_velocity_values(velocities[lammps_id]))
+        data.update(interpreter.convert_velocity_values(velocities[liggghts_id]))
 
         p = Particle(coordinates=coordinates, data=data)
 
@@ -98,9 +98,9 @@ def read_data_file(filename, atom_style=None):
 
 
 def write_data_file(filename, particles_list, atom_style=AtomStyle.GRANULAR):
-    """ Writes LAMMPS data file from CUDS objects
+    """ Writes liggghts data file from CUDS objects
 
-    Writes LAMMPS data file from a list of Particles.
+    Writes liggghts data file from a list of Particles.
 
     The particles will be annotated with their Simphony-uid. For example::
 
@@ -110,7 +110,7 @@ def write_data_file(filename, particles_list, atom_style=AtomStyle.GRANULAR):
     Parameters
     ----------
     filename : str
-        filename of lammps data file
+        filename of liggghts data file
 
     particles_list : iterable of Particles
         particles
@@ -129,7 +129,7 @@ def write_data_file(filename, particles_list, atom_style=AtomStyle.GRANULAR):
     material_type_to_mass = None if not _style_has_masses(
         atom_style) else _get_mass([pc.data for pc in particles_list])
 
-    writer = LammpsDataFileWriter(filename,
+    writer = LiggghtsDataFileWriter(filename,
                                   atom_style=atom_style,
                                   number_atoms=num_particles,
                                   number_atom_types=len(types),
@@ -153,7 +153,7 @@ def _style_has_masses(atom_style):
 def _get_mass(high_level_data):
     """ Get a dictionary from 'material type' to 'mass'.
 
-    Check that fits what LAMMPS can handle as well
+    Check that fits what liggghts can handle as well
     as ensure that it works with the limitations
     of how we are currently handling this info.
 

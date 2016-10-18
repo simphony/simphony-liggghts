@@ -9,13 +9,14 @@ from simphony.testing.utils import create_particles_with_id
 from simliggghts.liggghts_wrapper import LiggghtsWrapper
 from simliggghts.testing.md_example_configurator import MDExampleConfigurator
 
-# list of CUBA that is supported/needed by particles in LAMMPS-MD
+# list of CUBA that is supported/needed by particles in LIGGGHTS
 _SUPPORTED_CUBA =\
     [CUBA.VELOCITY,
      CUBA.ANGULAR_VELOCITY,
      CUBA.DENSITY,
      CUBA.RADIUS,
-     CUBA.MASS]
+     CUBA.EXTERNAL_APPLIED_FORCE]
+#     CUBA.MASS]
 
 
 class TestFileIoParticlesAddParticles(

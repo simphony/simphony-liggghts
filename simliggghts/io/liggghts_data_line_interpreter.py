@@ -4,8 +4,8 @@ from simphony.core.keywords import KEYWORDS
 from ..common.atom_style_description import ATOM_STYLE_DESCRIPTIONS
 
 
-class LammpsDataLineInterpreter(object):
-    """  Class interprets lines in LAMMPS data files using atom-style
+class LiggghtsDataLineInterpreter(object):
+    """  Class interprets lines in Liggghts data files using atom-style
 
     Lines should be interpreted differently based upon their atom style.
     For example, granular atom style::
@@ -29,7 +29,7 @@ class LammpsDataLineInterpreter(object):
 
        atom-ID atom-type x y z
 
-    Note that the last 3 values were not discussed because in the lammps
+    Note that the last 3 values were not discussed because in the Liggghts
     documentation, it is noted that "each line can optionally have 3 flags
     (nx,ny,nz) appended to it, which indicate which image of a periodic
     simulation box the atom is in"
@@ -37,7 +37,7 @@ class LammpsDataLineInterpreter(object):
     Parameters
     ----------
     atom_style : AtomStyle
-        style that lammps is using for "atoms"
+        style that Liggghts is using for "atoms"
 
     """
     def __init__(self, atom_style):
@@ -49,7 +49,7 @@ class LammpsDataLineInterpreter(object):
         Parameters
         ----------
         values : iterable of numbers
-            numbers read from line in atom section of LAMMPS data file
+            numbers read from line in atom section of Liggghts data file
 
         Returns:
         --------
@@ -70,7 +70,7 @@ class LammpsDataLineInterpreter(object):
                 cuba_values[value_info.cuba_key] = tuple([0.0, 0.0, 0.0])
             else:
                 cuba_values[value_info.cuba_key], index = \
-                    LammpsDataLineInterpreter.process_value(value_info,
+                    LiggghtsDataLineInterpreter.process_value(value_info,
                                                             values,
                                                             index)
         # coordinates come next
@@ -84,7 +84,7 @@ class LammpsDataLineInterpreter(object):
         Parameters
         ----------
         values : iterable of numbers
-            numbers read from line in velocity section of LAMMPS data file
+            numbers read from line in velocity section of Liggghts data file
 
         Returns:
         --------
@@ -98,7 +98,7 @@ class LammpsDataLineInterpreter(object):
         atom_style_description = ATOM_STYLE_DESCRIPTIONS[self._atom_style]
         for value_info in atom_style_description.velocity_attributes:
             cuba_velocity_values[value_info.cuba_key], index = \
-                LammpsDataLineInterpreter.process_value(value_info,
+                LiggghtsDataLineInterpreter.process_value(value_info,
                                                         values,
                                                         index)
 
@@ -133,7 +133,7 @@ class LammpsDataLineInterpreter(object):
         shape = keyword.shape
 
         if shape == [1]:
-            if keyword.name is "Mass":
+            if keyword.name is "MASS":
                 cuba_value =\
                     values[1]*values[1]*values[1]/8.0 *\
                     4.0/3.0*3.141592654 * values[2]

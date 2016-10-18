@@ -11,7 +11,7 @@ class AtomStyleDescription(object):
     Each atom style has a particular set of attributes that it supports
     (or provides). This class contains a list of what  attributes it
     contains. Note that the order of items in 'attributes' corresponds to
-    the order they appear in lammps-data file.
+    the order they appear in liggghts-data file.
 
     Attributes
     ----------
@@ -44,16 +44,16 @@ class ValueInfo(object):
     """  Class describes cuba value
 
     Class information on cuba value and provides conversion
-    between LAMMPS/SIMPHONY
+    between LIGGGHTS/SIMPHONY
 
     Attributes
     ----------
     cuba_key : CUBA
         CUBA key
     convert_to_cuba : function (optional)
-        method to convert from LAMMPS value to SimPhoNy-CUBA
+        method to convert from LIGGGHTS value to SimPhoNy-CUBA
     convert_from_cuba : function (optional)
-        method to convert from SimPhoNy-CUBA to LAMMPS value
+        method to convert from SimPhoNy-CUBA to LIGGGHTS value
 
     """
     def __init__(self,
@@ -74,12 +74,12 @@ ATOM_STYLE_DESCRIPTIONS = {
     AtomStyle.GRANULAR:
         AtomStyleDescription(
             attributes=[
-                ValueInfo(cuba_key=CUBA.RADIUS,  # but diameter in LAMMPS
+                ValueInfo(cuba_key=CUBA.RADIUS,  # but diameter in LIGGGHTS
                           convert_to_cuba=lambda x: x / 2,  # d to radius
                           convert_from_cuba=lambda x: x * 2),  # radius to d
                 ValueInfo(cuba_key=CUBA.DENSITY),
-                ValueInfo(cuba_key=CUBA.EXTERNAL_APPLIED_FORCE),
-                ValueInfo(cuba_key=CUBA.MASS)],
+                ValueInfo(cuba_key=CUBA.EXTERNAL_APPLIED_FORCE)],
+                #ValueInfo(cuba_key=CUBA.MASS)],
             velocity_attributes=[ValueInfo(cuba_key=CUBA.ANGULAR_VELOCITY)],
             has_mass_per_type=False)
 }

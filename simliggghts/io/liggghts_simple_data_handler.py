@@ -1,5 +1,5 @@
-class LammpsSimpleDataHandler(object):
-    """  Class to handle what is parsed by LammpsDataFileParser
+class LiggghtsSimpleDataHandler(object):
+    """  Class to handle what is parsed by LiggghtsDataFileParser
 
         Class just stores the parsed data and provides methods to
         retrieve this data

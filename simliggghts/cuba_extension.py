@@ -3,7 +3,7 @@ from enum import Enum, unique
 
 @unique
 class CUBAExtension(Enum):
-    """ Provisional CUBA keywords specific for Lammps-Md
+    """ Provisional CUBA keywords specific for Liggghts-Md
 
     These are additional CUBA-Keywords that are not included
     in simphony-common yet. The proposed description for

@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-from simphony.engine import lammps
+from simphony.engine import liggghts
 from simphony.bench.util import bench
 from simphony.core.cuba import CUBA
 from simphony.core.cuds_item import CUDSItem
@@ -84,13 +84,13 @@ if __name__ == '__main__':
             number_time_steps = 10
 
             for test in run_wrapper_tests:
-                lammps_wrapper = lammps.LammpsWrapper(
+                liggghts_wrapper = liggghts.LiggghtsWrapper(
                     use_internal_interface=is_internal)
-                configure_wrapper(lammps_wrapper,
+                configure_wrapper(liggghts_wrapper,
                                   particles,
                                   number_time_steps=number_time_steps)
 
-                results = bench(lambda: run_test(test.method, lammps_wrapper),
+                results = bench(lambda: run_test(test.method, liggghts_wrapper),
                                 repeat=1,
                                 adjust_runs=False)
 
@@ -100,10 +100,10 @@ if __name__ == '__main__':
                                is_internal), results)
 
             # test configuration
-            lammps_wrapper = lammps.LammpsWrapper(
+            liggghts_wrapper = liggghts.LiggghtsWrapper(
                 use_internal_interface=is_internal)
 
-            results = bench(lambda: configure_wrapper(lammps_wrapper,
+            results = bench(lambda: configure_wrapper(liggghts_wrapper,
                                                       particles,
                                                       number_time_steps),
                             repeat=1,

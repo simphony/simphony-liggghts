@@ -1,12 +1,12 @@
 LIGGGHTS engine for SimPhoNy
 ==========================
 
-The SimPhoNy engine for LIGGGHTS is available in the SimPhoNy through the engine plugin named ``lammps``
+The SimPhoNy engine for LIGGGHTS is available in the SimPhoNy through the engine plugin named ``liggghts``
 
-After installation, the user should be able to import the ``lammps`` engine plugin module::
+After installation, the user should be able to import the ``liggghts`` engine plugin module::
 
-  from simphony.engine import lammps
-    engine = lammps.LammpsWrapper()
+  from simphony.engine import liggghts
+    engine = liggghts.LammpsWrapper()
 
 
 
@@ -57,8 +57,8 @@ Limitations of the INTERNAL interface
 The following are known limitations when using the INTERNAL interface to LIGGGHTS:
  - Currently an upper limit of particle types (CUBA.MATERIAL_TYPE) is set due to
    the fact that LIGGGHTS only allows the number of types be configured at start
-   (and not changed later) (https://github.com/simphony/simphony-lammps-md/issues/66)
+   (and not changed later) (https://github.com/simphony/simphony-liggghts/issues/66)
  - No notification is provided to the user when an internal error occurs in the
    LIGGGHTS shared library as the library calls `exit(1)` and the process
    immediately exists (without an exception or writing to standard
-   output/error).  (https://github.com/simphony/simphony-lammps-md/issues/63)
+   output/error).  (https://github.com/simphony/simphony-liggghts/issues/63)

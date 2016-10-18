@@ -18,12 +18,12 @@ popd
 
 echo "Building LIGGGHTS executable"
 pushd myliggghts/src
-make -j 2 fedora
+make -j 8 fedora
 ln -s lgt_fedora liggghts
 
 echo "Making shared library for LIGGGHTS python wrapper"
 make makeshlib
-make  -j 2 -f Makefile.shlib fedora_fpic
+make  -j 8 -f Makefile.shlib fedora_fpic
 ln -s libliggghts_fedora_fpic.so libliggghts.so
 popd
 

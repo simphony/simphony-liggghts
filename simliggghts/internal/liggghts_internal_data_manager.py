@@ -12,23 +12,23 @@ from ..cuba_extension import CUBAExtension
 from ..config.script_writer import ScriptWriter
 
 
-class LammpsInternalDataManager(ABCDataManager):
-    """  Class managing LAMMPS data information using file-io
+class LiggghtsInternalDataManager(ABCDataManager):
+    """  Class managing LIGGGHTS data information using file-io
 
-    The class performs communicating the data to and from LAMMPS using the
-    internal interface (i.e. LAMMPS shared library).
+    The class performs communicating the data to and from LIGGGHTS using the
+    internal interface (i.e. LIGGGHTS shared library).
 
     Parameters
     ----------
-    lammps :
-        lammps python wrapper
+    liggghts :
+        liggghts python wrapper
     atom_style : AtomStyle
            atom_style
     """
-    def __init__(self, lammps, atom_style):
-        super(LammpsInternalDataManager, self).__init__()
+    def __init__(self, liggghts, atom_style):
+        super(LiggghtsInternalDataManager, self).__init__()
 
-        self._lammps = lammps
+        self._liggghts = liggghts
 
         dummy_bc = {CUBAExtension.BOX_FACES: ("periodic",
                                               "periodic",
@@ -55,15 +55,15 @@ class LammpsInternalDataManager(ABCDataManager):
         commands += "create_box {} box\n".format(globals.MAX_NUMBER_TYPES)
 
         for command in commands.splitlines():
-            print command
-            self._lammps.command(command)
-            print('Command {} finished.'.format(command))
+            #print command
+            self._liggghts.command(command)
+            #print('Command {} finished.'.format(command))
 
         # map from uname of Particles to Set of (particle) uids
         self._particles = {}
 
         # cache of coordinates and point data
-        self._particle_data_cache = ParticleDataCache(lammps=self._lammps)
+        self._particle_data_cache = ParticleDataCache(liggghts=self._liggghts)
 
         # cache of particle containers's data
         self._pc_data = {}
@@ -174,7 +174,7 @@ class LammpsInternalDataManager(ABCDataManager):
         cmd = get_box([de for _, de in self._pc_data_extension.iteritems()],
                       command_format=True,
                       change_existing=True)
-        self._lammps.command(cmd)
+        self._liggghts.command(cmd)
 
     def get_particle(self, uid, uname):
         """Get particle
@@ -193,7 +193,7 @@ class LammpsInternalDataManager(ABCDataManager):
 
             # TODO removing type from data as it not kept as a per-particle
             # data but currently it is on the container.
-            # In lammps it is only stored as a per-atom based attribute.
+            # In liggghts it is only stored as a per-atom based attribute.
             # This should be changed once #9 issue is addressed
             del data[CUBA.MATERIAL_TYPE]
 
@@ -249,10 +249,10 @@ class LammpsInternalDataManager(ABCDataManager):
                              data=data)
                 saved_particles[uname][uid] = p
 
-        self._lammps.command("delete_atoms group all compress yes")
+        self._liggghts.command("delete_atoms group all compress yes")
 
         # Use the new cache
-        self._particle_data_cache = ParticleDataCache(lammps=self._lammps)
+        self._particle_data_cache = ParticleDataCache(liggghts=self._liggghts)
 
         # re-add the saved atoms
         for uname in saved_particles:
@@ -305,7 +305,7 @@ class LammpsInternalDataManager(ABCDataManager):
         """read latest state
 
         """
-        self._update_from_lammps()
+        self._update_from_liggghts()
 
     def flush(self):
         """flush state
@@ -314,7 +314,7 @@ class LammpsInternalDataManager(ABCDataManager):
         if self._pc_data:
             # update particles (container)'s data
             # (updating only MASS at the moment as MATERIAL_TYPE is sent as a
-            # particle-based attribute to LAMMPS even though in SimPhoNy its
+            # particle-based attribute to LIGGGHTS even though in SimPhoNy its
             # a container-based attribute)
 
             # update the particle-data
@@ -322,7 +322,7 @@ class LammpsInternalDataManager(ABCDataManager):
 
         else:
             raise RuntimeError(
-                "No particles.  Lammps cannot run without a particle")
+                "No particles.  Liggghts cannot run without a particle")
         # TODO handle properly when there are no particle containers
         # or when some of them do not contain any particles
         # (i.e. someone has deleted all the particles)
@@ -337,9 +337,9 @@ class LammpsInternalDataManager(ABCDataManager):
             self._particle_data_cache.send_radius()
         else:
             raise RuntimeError(
-                "No particles.  Lammps cannot run without a particle")
+                "No particles.  Liggghts cannot run without a particle")
 
-    def _update_from_lammps(self):
+    def _update_from_liggghts(self):
         self._particle_data_cache.retrieve()
 
     def _set_particle(self, particle, uname):
@@ -353,7 +353,7 @@ class LammpsInternalDataManager(ABCDataManager):
             non-changing unique name of particle container
 
         """
-        # TODO using type from container.  in lammps it is only
+        # TODO using type from container.  in liggghts it is only
         # stored as a per-atom based attribute.
         # this should be changed once #9 issue is addressed
         p_type = self._pc_data[uname][CUBA.MATERIAL_TYPE]
@@ -370,10 +370,10 @@ class LammpsInternalDataManager(ABCDataManager):
                                                particle.uid)
 
     def _add_atoms(self, iterable, uname, safe=False):
-        """ Add multiple particles as atoms to lammps
+        """ Add multiple particles as atoms to liggghts
 
         The number of atoms to be added are randomly added somewhere
-        in the simulation box by LAMMPS and then their positions (and
+        in the simulation box by LIGGGHTS and then their positions (and
         other values are corrected/updated)
 
         Parameters
@@ -412,8 +412,8 @@ class LammpsInternalDataManager(ABCDataManager):
 
             uids.append(particle.uid)
 
-        # create atoms in lammps
-        self._lammps.command(
+        # create atoms in liggghts
+        self._liggghts.command(
             "create_atoms {} random {} 42 NULL".format(p_type, len(uids)))
 
         return uids

@@ -7,8 +7,8 @@ def get_box(particle_data_containers,
     """ Get simulation box commands
 
     Using CUBA.BOX_VECTORS and CUBA.BOX_ORIGIN, return the
-    string used by LAMMPS to define the simulation box in
-    the LAMMPS data file or as a command.
+    string used by LIGGGHTS to define the simulation box in
+    the LIGGGHTS data file or as a command.
 
     Currently the box vectors (and origin) have to be
     the same for each particle container.
@@ -19,10 +19,10 @@ def get_box(particle_data_containers,
         list of containers of data containers from particles
     command_format: boolean
         if command format is true, then box command suitable
-        for lammps-command is returned.  Otherwise, the
-        string returned is suitable for LAMMPS data file.
+        for liggghts-command is returned.  Otherwise, the
+        string returned is suitable for liggghts data file.
     change_existing: boolean
-        if true, the lammps-command suitable for changing the
+        if true, the liggghts-command suitable for changing the
         simulation box is returned
     """
     origin = None
@@ -49,9 +49,9 @@ def get_box(particle_data_containers,
     if not origin:
         origin = (0.0, 0.0, 0.0)
 
-    # Note: For LAMMPS we can define a orthogonal simulation
+    # Note: For LIGGGHTS we can define a orthogonal simulation
     # or non-orthogonal simulation box. For the non-orthogonal
-    # simulation box, the lammps doc states the following:
+    # simulation box, the liggghts doc states the following:
     # "a must lie on the positive x axis. b must lie in
     # the xy plane, with strictly positive y component. c may
     # have any orientation with strictly positive z component.

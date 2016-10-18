@@ -4,14 +4,14 @@ from enum import Enum
 from collections import OrderedDict
 
 
-class LammpsDataFileParser(object):
-    """  Class parses Lammps data file (produced by lammps command
+class LiggghtsDataFileParser(object):
+    """  Class parses Liggghts data file (produced by Liggghts command
     write_data) and calls a handler which processes the parsed
     information.
 
     A handler class is given the parsed information. This handler class can
     then determine what it is does with it.  For, example it could just store
-    the data in memory (see LammpsSimpleDataHandler) or write it some other
+    the data in memory (see LiggghtsSimpleDataHandler) or write it some other
     data file (e.g. a CUDS-file).
 
     Handler classes have the following methods:
@@ -66,7 +66,7 @@ class LammpsDataFileParser(object):
                         id = int(values[0])
                         type_coord_etc = [int(values[1])]
                         for v in map(float, values[2:7]): # The 7 is hard coded here to follow the data 
-                                                          # file format form LAMMPS sphere
+                                                          # file format form Liggghts sphere
                             type_coord_etc.append(v)
                         self._handler.process_atoms(id, type_coord_etc)
                     elif state is _ReadState.ATOMS_BEGIN:

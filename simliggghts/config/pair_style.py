@@ -21,7 +21,7 @@ class PairStyle(object):
     """ A PairStyle instance
 
     The PairStyle object interprets the configuration of the SP
-    to determine the pairwise interaction of atoms in LAMMPS
+    to determine the pairwise interaction of atoms in LIGGGHTS
 
 
     """

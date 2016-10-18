@@ -17,9 +17,9 @@ __all__ = ["LiggghtsWrapper", "EngineType", "CUBAExtension", 'read_data_file']
 
 @register
 class SimliggghtsExtension(ABCEngineExtension):
-    """Simphony-lammps-md extension.
+    """Simphony-liggghts extension.
 
-    This extension provides support for lammps and liggghts engines.
+    This extension provides support for liggghts engines.
     """
 
     def get_supported_engines(self):

@@ -1,23 +1,23 @@
 Engine
 =======
 
-The LAMMPS engine for SimPhoNy (``LammpsWrapper`` in module
-``simlammps.lammps_wrapper``) implements the SimPhoNy's abstract interface
-definition for engines (``ABCModelingEngine``). This LAMMPS engine is available
+The LIGGGHTS engine for SimPhoNy (``LiggghtsWrapper`` in module
+``simliggghts.liggghts_wrapper``) implements the SimPhoNy's abstract interface
+definition for engines (``ABCModelingEngine``). This LIGGGHTS engine is available
 through the engine plug-in to the SimPhoNy library.
 
 
 .. rubric:: Engine
 
-.. currentmodule:: simlammps
+.. currentmodule:: simliggghts
 
 .. autosummary::
 
-   ~lammps_wrapper.LammpsWrapper
+   ~liggghts_wrapper.LiggghtsWrapper
 
 .. rubric:: Implementation
 
-.. automodule:: simlammps.lammps_wrapper
+.. automodule:: simliggghts.liggghts_wrapper
     :members:
     :undoc-members:
     :show-inheritance:

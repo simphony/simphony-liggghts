@@ -5,24 +5,19 @@ class AtomStyle(Enum):
     """ Supported atom styles
 
     """
-    ATOMIC = 0
     GRANULAR = 1
-    SPHERE = 1  # same as GRANULAR in LIGGGHTS
 
-# mapping from lammps style to AtomStyle
-LAMMPS_STYLE = {
-    'atomic': AtomStyle.ATOMIC,
-    'granular': AtomStyle.GRANULAR,
-    'sphere': AtomStyle.SPHERE}
+# mapping from liggghts style to AtomStyle
+LIGGGHTS_STYLE = {'granular': AtomStyle.GRANULAR}
 
 
-def get_atom_style(lammps_atom_style):
+def get_atom_style(liggghts_atom_style):
     """ Return atom style from string
 
         Parameters
         ----------
-        lammps_atom_style : string
-            string of lammps style (i.e. from lammps data file)
+        liggghts_atom_style : string
+            string of liggghts style (i.e. from liggghts data file)
 
         Returns
         -------
@@ -31,17 +26,17 @@ def get_atom_style(lammps_atom_style):
         Raises
         ------
         RunTimeError
-            If 'lammps_style' is not recognized
+            If 'liggghts_style' is not recognized
 
     """
     try:
-        return LAMMPS_STYLE[lammps_atom_style]
+        return LIGGGHTS_STYLE[liggghts_atom_style]
     except KeyError:
         return RuntimeError(
-            "Unsupported lammps atom style: '{}'".format(lammps_atom_style))
+            "Unsupported liggghts atom style: '{}'".format(liggghts_atom_style))
 
 
-def get_lammps_string(atom_style):
+def get_liggghts_string(atom_style):
     """ Return atom style from string
 
         Parameters
@@ -52,16 +47,16 @@ def get_lammps_string(atom_style):
         Returns
         -------
         string
-            lammps string describing the atom style
+            liggghts string describing the atom style
 
         Raises
         ------
         RunTimeError
 
     """
-    for lammps_style, corresponding_atom_style in LAMMPS_STYLE.iteritems():
+    for liggghts_style, corresponding_atom_style in LIGGGHTS_STYLE.iteritems():
         if atom_style == corresponding_atom_style:
-            return lammps_style
+            return liggghts_style
 
     return RuntimeError(
-        "Could not find lammps atom style for '{}'".format(atom_style))
+        "Could not find liggghts atom style for '{}'".format(atom_style))

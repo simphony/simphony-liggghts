@@ -2,7 +2,7 @@ from simphony.cuds.abc_particles import ABCParticles
 from simphony.core.cuds_item import CUDSItem
 
 
-class LammpsParticles(ABCParticles):
+class LiggghtsParticles(ABCParticles):
     """ Responsible class to synchronize operations on particles
 
     Attributes

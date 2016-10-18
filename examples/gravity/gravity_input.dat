@@ -1,4 +1,4 @@
-LAMMPS data file via write_data, version Version LIGGGHTS-PUBLIC 3.3.0, compiled 2016-03-17-14:38:54 by ras, git commit 9b1fc57b77c483deaf2c0a6c69241c5d4f91e3c2 based on LAMMPS 23 Nov 2013, timestep = 0
+LIGGGHTS data file via write_data, version Version LIGGGHTS-PUBLIC 3.3.0, compiled 2016-03-17-14:38:54 by ras, git commit 9b1fc57b77c483deaf2c0a6c69241c5d4f91e3c2 based on LAMMPS 23 Nov 2013, timestep = 0
 
 105 atoms
 2 atom types
