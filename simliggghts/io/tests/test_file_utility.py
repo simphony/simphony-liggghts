@@ -35,23 +35,25 @@ class TestFileUtility(unittest.TestCase):
             _explicit_sphere_style_file_contents))
 
         # then
-        self.assertEqual(1, len(particles_list))
+        self.assertEqual(2, len(particles_list))
 
-        particles = particles_list[0]
-        self.assertEqual(3, particles.count_of(CUDSItem.PARTICLE))
-        self.assertEqual(str(particles.data[CUBA.MATERIAL_TYPE]),
-                         particles.name)
+        particles1 = particles_list[0]
+        particles2 = particles_list[1]
+        self.assertEqual(2, particles1.count_of(CUDSItem.PARTICLE))
+        self.assertEqual(1, particles2.count_of(CUDSItem.PARTICLE))
+        self.assertEqual(str(particles1.data[CUBA.MATERIAL_TYPE]),
+                         particles1.name)
         assert_almost_equal(
-            particles.data_extension[CUBAExtension.BOX_ORIGIN],
+            particles1.data_extension[CUBAExtension.BOX_ORIGIN],
             (-10.0, -7.500, -0.500))
         box = [(25.0, 0.0, 0.0),
                (0.0, 15.0, 0.0),
                (0.0, 0.0, 1.0)]
         assert_almost_equal(
-            particles.data_extension[CUBAExtension.BOX_VECTORS],
+            particles1.data_extension[CUBAExtension.BOX_VECTORS],
             box)
 
-        for p in particles.iter_particles():
+        for p in particles1.iter_particles():
             assert_almost_equal(p.data[CUBA.ANGULAR_VELOCITY], [0.0, 0.0, 1.0])
             assert_almost_equal(p.data[CUBA.VELOCITY], [5.0, 0.0, 0.0])
             assert_almost_equal(p.data[CUBA.RADIUS], 0.5/2)
@@ -129,7 +131,7 @@ def _get_average_value(particles, key):
 _explicit_sphere_style_file_contents = """LIGGGHTS data file via write_data, version 28 Jun 2014, timestep = 25000
 
 3 atoms
-1 atom types
+2 atom types
 
 -10.0000000000000000e+00 15.0000000000000000e+00 xlo xhi
 -7.5000000000000000e+00 7.5000000000000000e+00 ylo yhi
@@ -138,7 +140,7 @@ _explicit_sphere_style_file_contents = """LIGGGHTS data file via write_data, ver
 Atoms # granular
 
 1 1 0.5 1.0000000000000000e+00 -5.0 0.0 0.0000000000000000e+00 0 0 0
-2 1 0.5 1.0000000000000000e+00 10.0 0.0 0.0000000000000000e+00 0 0 0
+2 2 0.5 1.0000000000000000e+00 10.0 0.0 0.0000000000000000e+00 0 0 0
 3 1 0.5 1.0000000000000000e+00 10.43330 0.25000 0.0000000000000000e+00 0 0 0
 
 Velocities
