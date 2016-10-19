@@ -32,33 +32,29 @@ class ParticleDataCache(object):
         # and configured by the user of this class (instead of
         # hard coded here)
         self._data_entries = [_LiggghtsData(CUBA=CUBA.VELOCITY,
-                                          liggghts_name="v",
-                                          type=3,  # array of doubles
-                                          count=3),
+											  liggghts_name="v",
+											  type=3,  # array of doubles
+											  count=3),
                               _LiggghtsData(CUBA=CUBA.ANGULAR_VELOCITY,
-                                          liggghts_name="omega",
-                                          type=3,  # array of doubles
-                                          count=3),
+											  liggghts_name="omega",
+											  type=3,  # array of doubles
+											  count=3),
                               _LiggghtsData(CUBA=CUBA.DENSITY,
-                                          liggghts_name="density",
-                                          type=2,  # vector of doubles
-                                          count=1),
-                              #_LiggghtsData(CUBA=CUBA.MASS,
-                                          #liggghts_name="rmass",
-                                          #type=2,  # vector of doubles
-                                          #count=1),
+											  liggghts_name="density",
+											  type=2,  # vector of doubles
+											  count=1),
                               _LiggghtsData(CUBA=CUBA.RADIUS,
-                                          liggghts_name="radius",
-                                          type=2,  # vector of doubles
-                                          count=1),
+											  liggghts_name="radius",
+											  type=2,  # vector of doubles
+											  count=1),
                               _LiggghtsData(CUBA=CUBA.MATERIAL_TYPE,
-                                          liggghts_name="type",
-                                          type=0,  # int
-                                          count=1),
+											  liggghts_name="type",
+											  type=0,  # int
+											  count=1),
                               _LiggghtsData(CUBA=CUBA.EXTERNAL_APPLIED_FORCE,
-                                          liggghts_name="df",
-                                          type=1,  # per-atom
-                                          count=3)]  # array
+											  liggghts_name="df",
+											  type=1,  # per-atom
+											  count=3)]  # array
         # map from uid to index in liggghts arrays
         self._index_of_uid = {}
 
@@ -85,7 +81,8 @@ class ParticleDataCache(object):
 
         for entry in self._data_entries:
             if entry.CUBA is CUBA.EXTERNAL_APPLIED_FORCE:
-                df_retrieve = self._liggghts.extract_fix(entry.liggghts_name, 1, 2)
+                df_retrieve = self._liggghts.extract_fix(
+									entry.liggghts_name, 1, 2)
 
                 k = 0
                 for i in range(0, natom):
@@ -94,7 +91,8 @@ class ParticleDataCache(object):
                         k += 1
             elif entry.count > 1:
                 extract_prop = \
-                    self._liggghts.extract_atom(entry.liggghts_name, entry.type)
+                    self._liggghts.extract_atom(
+									entry.liggghts_name, entry.type)
                 k = 0
                 for i in range(0, natom):
                     for j in range(0, entry.count):
@@ -102,7 +100,8 @@ class ParticleDataCache(object):
                         k += 1
             else:
                 extract_prop =\
-                    self._liggghts.extract_atom(entry.liggghts_name, entry.type)
+                    self._liggghts.extract_atom(
+									entry.liggghts_name, entry.type)
                 k = 0
                 for i in range(0, natom):
                     self._cache[entry.CUBA][k] = extract_prop[i]
@@ -124,7 +123,8 @@ class ParticleDataCache(object):
         for entry in self._data_entries:
             values = self._cache[entry.CUBA]
             if entry.CUBA is CUBA.EXTERNAL_APPLIED_FORCE:
-                df_ext = self._liggghts.extract_fix(entry.liggghts_name, 1, 2)
+                df_ext = self._liggghts.extract_fix(
+									entry.liggghts_name, 1, 2)
 
                 k = 0
                 for i in range(0, natom):
@@ -133,7 +133,8 @@ class ParticleDataCache(object):
                         k += 1
             elif entry.count > 1:
                 extract_prop =\
-                    self._liggghts.extract_atom(entry.liggghts_name, entry.type)
+                    self._liggghts.extract_atom(
+									entry.liggghts_name, entry.type)
                 k = 0
                 for i in range(0, natom):
                     for j in range(0, entry.count):
@@ -141,7 +142,8 @@ class ParticleDataCache(object):
                         k += 1
             else:
                 extract_prop =\
-                    self._liggghts.extract_atom(entry.liggghts_name, entry.type)
+                    self._liggghts.extract_atom(
+									entry.liggghts_name, entry.type)
                 k = 0
                 for i in range(0, natom):
                     extract_prop[i] = values[k]

@@ -115,7 +115,7 @@ class ABCDataManager(object):
         self._lpcs[uname] = liggghts_pc
 
         self._handle_new_particles(uname, particles)
-        
+
         return liggghts_pc
 
     @abc.abstractmethod
@@ -292,7 +292,7 @@ class ABCDataManager(object):
         Parameters
         ----------
         input_data_filename : string, optional
-            name of data-file where inform is written to (i.e liggghts's input).
+          name of data-file where inform is written to (i.e liggghts's input).
         """
 
     @abc.abstractmethod

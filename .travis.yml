@@ -27,7 +27,7 @@ script:
   - flake8 --exclude=myliggghts .
   - coverage run -m unittest discover
   - python setup.py build_sphinx
-  - cd examples/dem_billiards/; python dem_billiards.py
+  - cd examples/billiards/; python dem_billiards.py
 
 after_success:
   - pip install codecov

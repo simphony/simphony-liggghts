@@ -58,7 +58,6 @@ class TestFileUtility(unittest.TestCase):
             assert_almost_equal(p.data[CUBA.VELOCITY], [5.0, 0.0, 0.0])
             assert_almost_equal(p.data[CUBA.RADIUS], 0.5/2)
             assert_almost_equal(p.data[CUBA.DENSITY], 1.0)
-            #assert_almost_equal(p.data[CUBA.MASS], 1.0)
 
     def test_write_file_sphere(self):
         # given

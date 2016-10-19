@@ -29,7 +29,7 @@ def get_particles(y_range):
     try:
         with open(script_name, "w") as script_file:
             script_file.write(liggghts_script.format(y_range=y_range,
-                                                   data_name=data_name))
+                                                     data_name=data_name))
         cmd = ("liggghts -screen none"
                " -log none -echo none"
                " < {}").format(script_name)

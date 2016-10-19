@@ -90,7 +90,7 @@ if __name__ == '__main__':
                                   particles,
                                   number_time_steps=number_time_steps)
 
-                results = bench(lambda: run_test(test.method, liggghts_wrapper),
+                results = bench(lambda:run_test(test.method, liggghts_wrapper),
                                 repeat=1,
                                 adjust_runs=False)
 

@@ -33,7 +33,8 @@ def get_atom_style(liggghts_atom_style):
         return LIGGGHTS_STYLE[liggghts_atom_style]
     except KeyError:
         return RuntimeError(
-            "Unsupported liggghts atom style: '{}'".format(liggghts_atom_style))
+            "Unsupported liggghts atom style: '{}'".format(
+												liggghts_atom_style))
 
 
 def get_liggghts_string(atom_style):

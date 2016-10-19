@@ -84,7 +84,8 @@ def read_data_file(filename, atom_style=None):
     # add each particle to each Particles
     for liggghts_id, values in atoms.iteritems():
         coordinates, data = interpreter.convert_atom_values(values)
-        data.update(interpreter.convert_velocity_values(velocities[liggghts_id]))
+        data.update(
+			interpreter.convert_velocity_values(velocities[liggghts_id]))
 
         p = Particle(coordinates=coordinates, data=data)
 
@@ -130,11 +131,12 @@ def write_data_file(filename, particles_list, atom_style=AtomStyle.GRANULAR):
         atom_style) else _get_mass([pc.data for pc in particles_list])
 
     writer = LiggghtsDataFileWriter(filename,
-                                  atom_style=atom_style,
-                                  number_atoms=num_particles,
-                                  number_atom_types=len(types),
-                                  simulation_box=box,
-                                  material_type_to_mass=material_type_to_mass)
+									  atom_style=atom_style,
+									  number_atoms=num_particles,
+									  number_atom_types=len(types),
+									  simulation_box=box,
+									  material_type_to_mass=
+										material_type_to_mass)
     for particles in particles_list:
         material_type = particles.data[CUBA.MATERIAL_TYPE]
         for p in particles.iter_particles():

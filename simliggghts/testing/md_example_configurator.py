@@ -43,7 +43,6 @@ class MDExampleConfigurator:
         # CM
         wrapper.CM[CUBA.NUMBER_OF_TIME_STEPS] = number_time_steps
         wrapper.CM[CUBA.TIME_STEP] = 0.003
-        #wrapper.CM_extension[CUBAExtension.THERMODYNAMIC_ENSEMBLE] = "NVE"
 
         if material_types is None:
             material_types = set([1, 2])
@@ -51,18 +50,18 @@ class MDExampleConfigurator:
             material_types = set(material_types)
 
         # SP
-                
+        
         wrapper.SP[CUBA.YOUNG_MODULUS] = [2.e4, 2.e4]
         wrapper.SP[CUBA.POISSON_RATIO] = [0.45, 0.45]
         wrapper.SP[CUBA.RESTITUTION_COEFFICIENT] = [0.95, 0.95, 0.95, 0.95]
         wrapper.SP[CUBA.FRICTION_COEFFICIENT] = [0.0, 0.0, 0.0, 0.0]
         wrapper.SP[CUBA.COHESION_ENERGY_DENSITY] = [0.0, 0.0, 0.0, 0.0]
-        
+
         wrapper.SP_extension[CUBAExtension.PAIR_POTENTIALS] = ['repulsion']
 
-
         # BC
-        wrapper.BC_extension[CUBAExtension.BOX_FACES] = ["periodic", "periodic", "periodic"]
+        wrapper.BC_extension[CUBAExtension.BOX_FACES] = \
+								["periodic", "periodic", "periodic"]
         wrapper.BC_extension[CUBAExtension.FIXED_GROUP] = [0, 0]
 
     @staticmethod
@@ -82,7 +81,6 @@ class MDExampleConfigurator:
 
         # add particle containers
         MDExampleConfigurator.add_particles(wrapper)
-
 
     @staticmethod
     def add_particles(wrapper):
@@ -117,7 +115,6 @@ class MDExampleConfigurator:
                 p.data[CUBA.VELOCITY] = (0.0, 0.0, 0.0)
                 p.data[CUBA.ANGULAR_VELOCITY] = (0.0, 0.0, 0.0)
                 p.data[CUBA.DENSITY] = (1.0)
-               # p.data[CUBA.MASS] = (1.0)
                 p.data[CUBA.RADIUS] = (1.0)
                 p.data[CUBA.EXTERNAL_APPLIED_FORCE] = (0.0, 0.0, 0.0)
                 pc.add_particles([p])
@@ -148,7 +145,6 @@ class MDExampleConfigurator:
         """
 
         data = DataContainer()
-        #data[CUBA.MASS] = mass
         data[CUBA.MATERIAL_TYPE] = material_type
 
         pc.data = data
@@ -157,7 +153,6 @@ class MDExampleConfigurator:
                              MDExampleConfigurator.box_vectors,
                              CUBAExtension.BOX_ORIGIN:
                              MDExampleConfigurator.box_origin}
-
 
         wrapper.add_dataset(pc)
 

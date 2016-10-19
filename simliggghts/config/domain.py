@@ -79,6 +79,7 @@ def get_box(particle_data_containers,
                              origin[1], vectors[1][1]+origin[1],
                              origin[2], vectors[2][2]+origin[2])
 
+
 def _check_vectors(vectors):
     # TODO: currently only handling orthogonal simulation box
     # (where a must lie on positive x axis..) so only something

@@ -55,9 +55,7 @@ class LiggghtsInternalDataManager(ABCDataManager):
         commands += "create_box {} box\n".format(globals.MAX_NUMBER_TYPES)
 
         for command in commands.splitlines():
-            #print command
             self._liggghts.command(command)
-            #print('Command {} finished.'.format(command))
 
         # map from uname of Particles to Set of (particle) uids
         self._particles = {}

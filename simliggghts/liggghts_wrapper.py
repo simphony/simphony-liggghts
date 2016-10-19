@@ -6,15 +6,11 @@ import contextlib
 import os
 import tempfile
 import shutil
-from enum import (IntEnum, unique)
-from random import randint
-from simphony.core.cuba import CUBA
 
 from simphony.cuds.abc_modeling_engine import ABCModelingEngine
 from simphony.cuds.abc_particles import ABCParticles
 from simphony.core.data_container import DataContainer
 
-from .common import globals
 from .io.liggghts_fileio_data_manager import LiggghtsFileIoDataManager
 from .io.liggghts_process import LiggghtsProcess
 from .internal.liggghts_internal_data_manager import (
@@ -41,7 +37,7 @@ class LiggghtsWrapper(ABCModelingEngine):
 
 
     """
-    def __init__(self,use_internal_interface=False):
+    def __init__(self, use_internal_interface=False):
         """ Constructor.
 
         Parameters
@@ -68,8 +64,7 @@ class LiggghtsWrapper(ABCModelingEngine):
                                                  "-log", "none"])
             self._data_manager = LiggghtsInternalDataManager(self._liggghts,
                                                            atom_style)
-            
-                
+  
         else:
             self._data_manager = LiggghtsFileIoDataManager(atom_style)
 
@@ -79,7 +74,6 @@ class LiggghtsWrapper(ABCModelingEngine):
         self.CM_extension = {}
         self.SP_extension = {}
         self.BC_extension = {}
-
 
     def add_dataset(self, container):
         """Add a CUDS container
@@ -97,8 +91,7 @@ class LiggghtsWrapper(ABCModelingEngine):
             If there is already a dataset with the given name.
 
         """
-        
-        
+
         if not isinstance(container, ABCParticles):
             raise TypeError(
                 "The type of the dataset container is not supported")
@@ -109,12 +102,6 @@ class LiggghtsWrapper(ABCModelingEngine):
                     container.name))
         else:
             self._data_manager.new_particles(container)
-            
-        #if container.data[CUBA.MATERIAL_TYPE] not in set(types) and len(types) > 0:
-           #globals.MAX_NUMBER_TYPES += 1
-            
-
-
 
     def get_dataset(self, name):
         """ Get the dataset
@@ -200,74 +187,78 @@ class LiggghtsWrapper(ABCModelingEngine):
         """
 
         if self._use_internal_interface:
-             
+
             for name in self._data_manager:
-              partcont = self.get_dataset(name)
-         
-            self.SP_extension[CUBAExtension.BOX_VECTORS] = partcont.data_extension[CUBAExtension.BOX_VECTORS]
-            self.SP_extension[CUBAExtension.BOX_ORIGIN] = partcont.data_extension[CUBAExtension.BOX_ORIGIN]
+                partcont = self.get_dataset(name)
+
+            self.SP_extension[CUBAExtension.BOX_VECTORS] = \
+								partcont.data_extension[CUBAExtension.BOX_VECTORS]
+            self.SP_extension[CUBAExtension.BOX_ORIGIN] = \
+								partcont.data_extension[CUBAExtension.BOX_ORIGIN]
             
-            
-            ScriptWriter.check_configuration_SP(_combine(self.SP, self.SP_extension))
-            ScriptWriter.check_configuration_BC(_combine(self.BC, self.BC_extension))
-            ScriptWriter.check_configuration_CM(_combine(self.CM, self.CM_extension))
-            
-            
-            
-            # Flush radius once to give liggghts the required information for cutoff distances
+            ScriptWriter.check_configuration_SP(
+								_combine(self.SP, self.SP_extension))
+            ScriptWriter.check_configuration_BC(
+								_combine(self.BC, self.BC_extension))
+            ScriptWriter.check_configuration_CM(
+								_combine(self.CM, self.CM_extension))
+
+            # Flush radius once to give liggghts the required information for 
+			# cutoff distances
             self._data_manager.flush_radius()
 
-
             commands = ""
-            
-            commands += ScriptWriter.get_pair_style_liggghts(_combine(self.SP, self.SP_extension))
-            
+
+            commands += ScriptWriter.get_pair_style_liggghts(
+								_combine(self.SP, self.SP_extension))
+
             commands += "pair_coeff      * *\n"
-            
-            commands += ScriptWriter.get_material_data(_combine(self.SP, self.SP_extension))
-            
-            commands += ScriptWriter.get_boundary(_combine(self.BC,self.BC_extension),
-                change_existing_boundary=True)
-            
+
+            commands += ScriptWriter.get_material_data(
+								_combine(self.SP, self.SP_extension))
+
+            commands += ScriptWriter.get_boundary(
+								_combine(self.BC, self.BC_extension),
+								change_existing_boundary=True)
+
             commands += "fix 1 all nve\n"
 
-            commands += ScriptWriter.get_box_planes(_combine(self.SP, self.SP_extension), \
-                _combine(self.BC,self.BC_extension))
-            
-            commands += ScriptWriter.get_fixed_groups(_combine(self.BC,self.BC_extension))
-            
+            commands += ScriptWriter.get_box_planes(
+								_combine(self.SP, self.SP_extension),
+								_combine(self.BC, self.BC_extension))
+
+            commands += ScriptWriter.get_fixed_groups(
+								_combine(self.BC, self.BC_extension))
+
             commands += "group group_1 type 1\n"
-            #commands += "dump 1 all custom %i test.traj id type x y z vx vy radius" % self.CM[CUBA.NUMBER_OF_TIME_STEPS]
-            
+
             for command in commands.splitlines():
-              self._liggghts.command(command)
-              
-              
-            # Extra treatment for external forces, since df vector must be updated for the case of particle(s)
-            # addition or removal
-            commands = ""       
+                self._liggghts.command(command)
+
+            # Extra treatment for external forces, since df vector must 
+            # be updated for the case of particle(s) addition or removal
+            commands = ""
             commands += ScriptWriter.get_ext_forces(self)
             commands += "run 0"     # Building external force vector df
             for command in commands.splitlines():
                 self._liggghts.command(command)
 
-
             # before running, we flush any changes to liggghts
             self._data_manager.flush()
-            
+
             commands = ""
-            commands += ScriptWriter.get_run(CM=_combine(self.CM,self.CM_extension))
-            
+            commands += ScriptWriter.get_run(CM=
+								_combine(self.CM, self.CM_extension))
+
             for command in commands.splitlines():
-                #print command
                 self._liggghts.command(command)
-  
+
             # after running, we read any changes from liggghts
             # TODO rework
             self._data_manager.read()
-            
+
         else:
-         
+
             with _temp_directory() as temp_dir:
                 input_data_filename = os.path.join(
                     temp_dir, "data_in.liggghts")
@@ -276,15 +267,15 @@ class LiggghtsWrapper(ABCModelingEngine):
 
                 # before running, we flush any changes to liggghts
                 self._data_manager.flush(input_data_filename)
-                
+
                 for name in self._data_manager:
                     partcont = self.get_dataset(name)
-                    
-                    #yield self._data_manager[name]
-                self.SP_extension[CUBAExtension.BOX_VECTORS] = partcont.data_extension[CUBAExtension.BOX_VECTORS]
-                self.SP_extension[CUBAExtension.BOX_ORIGIN] = partcont.data_extension[CUBAExtension.BOX_ORIGIN]
 
-                #stop
+                self.SP_extension[CUBAExtension.BOX_VECTORS] = \
+					partcont.data_extension[CUBAExtension.BOX_VECTORS]
+                self.SP_extension[CUBAExtension.BOX_ORIGIN] = \
+					partcont.data_extension[CUBAExtension.BOX_ORIGIN]
+
                 commands = self._script_writer.get_configuration(
                     input_data_file=input_data_filename,
                     output_data_file=output_data_filename,
@@ -292,9 +283,8 @@ class LiggghtsWrapper(ABCModelingEngine):
                     CM=_combine(self.CM, self.CM_extension),
                     SP=_combine(self.SP, self.SP_extension))
                 process = LiggghtsProcess(liggghts_name=self._executable_name,
-                                        log_directory=temp_dir)
+											log_directory=temp_dir)
                 process.run(commands)
-                
 
                 # after running, we read any changes from liggghts
                 self._data_manager.read(output_data_filename)
@@ -320,4 +310,3 @@ def _combine(data_container, data_container_extension):
     result = dict(data_container_extension)
     result.update(data_container)
     return result
-   

@@ -66,11 +66,6 @@ class ValueInfo(object):
 
 # description of each atom-style
 ATOM_STYLE_DESCRIPTIONS = {
-    #AtomStyle.ATOMIC:
-        #AtomStyleDescription(
-            ## attributes has default (i.e. coordinates)
-            ## , velocity..)
-            #has_mass_per_type=True),  # but with mass
     AtomStyle.GRANULAR:
         AtomStyleDescription(
             attributes=[
@@ -79,7 +74,6 @@ ATOM_STYLE_DESCRIPTIONS = {
                           convert_from_cuba=lambda x: x * 2),  # radius to d
                 ValueInfo(cuba_key=CUBA.DENSITY),
                 ValueInfo(cuba_key=CUBA.EXTERNAL_APPLIED_FORCE)],
-                #ValueInfo(cuba_key=CUBA.MASS)],
             velocity_attributes=[ValueInfo(cuba_key=CUBA.ANGULAR_VELOCITY)],
             has_mass_per_type=False)
 }
