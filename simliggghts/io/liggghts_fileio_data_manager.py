@@ -42,10 +42,10 @@ def _filter_unsupported_data(iterable, supported_cuba):
 class LiggghtsFileIoDataManager(ABCDataManager):
     """  Class managing Liggghts data information using file-io
 
-    The class performs communicating the data to and from Liggghts using 
-	FILE-IO communications (i.e. through input and output files). The class 
-	manages data existing in Liggghts (via Liggghts data file) and allows this
-	data to be queried and to be changed.
+    The class performs communicating the data to and from Liggghts using
+    FILE-IO communications (i.e. through input and output files). The class
+    manages data existing in Liggghts (via Liggghts data file) and allows this
+    data to be queried and to be changed.
 
     Class maintains a cache of the particle information. This information
     is read from file whenever the read() method is called and written to
@@ -246,8 +246,8 @@ class LiggghtsFileIoDataManager(ABCDataManager):
         Parameters
         ----------
         input_data_filename :
-            name of data-file where inform is written to 
-			(i.e Liggghts's input).
+            name of data-file where inform is written to
+            (i.e Liggghts's input).
         """
         if self._pc_cache:
             self._write_data_file(input_data_filename)
@@ -347,11 +347,11 @@ class LiggghtsFileIoDataManager(ABCDataManager):
             if ATOM_STYLE_DESCRIPTIONS[self._atom_style].has_mass_per_type \
             else None
         writer = LiggghtsDataFileWriter(filename,
-											  atom_style=self._atom_style,
-											  number_atoms=num_particles,
-											  number_atom_types=len(types),
-											  simulation_box=box,
-											  material_type_to_mass=mass)
+                                        atom_style=self._atom_style,
+                                        number_atoms=num_particles,
+                                        number_atom_types=len(types),
+                                        simulation_box=box,
+                                        material_type_to_mass=mass)
         for uname, pc in self._pc_cache.iteritems():
             material_type = pc.data[CUBA.MATERIAL_TYPE]
             for p in pc.iter_particles():

@@ -5,7 +5,7 @@ import os
 
 from simliggghts.io.liggghts_data_file_parser import LiggghtsDataFileParser
 from simliggghts.io.liggghts_simple_data_handler import \
-													LiggghtsSimpleDataHandler
+                                                     LiggghtsSimpleDataHandler
 
 
 class TestLiggghtsSimpleDataHandler(unittest.TestCase):

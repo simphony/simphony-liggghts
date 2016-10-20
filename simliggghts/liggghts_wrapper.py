@@ -60,11 +60,11 @@ class LiggghtsWrapper(ABCModelingEngine):
 
         if self._use_internal_interface:
             import liggghts
-            self._liggghts = liggghts.liggghts(cmdargs=["-screen", "none",
-                                                 "-log", "none"])
-            self._data_manager = LiggghtsInternalDataManager(self._liggghts,
-                                                           atom_style)
-  
+            self._liggghts = liggghts.liggghts(
+                cmdargs=["-screen", "none", "-log", "none"])
+            self._data_manager = LiggghtsInternalDataManager(
+                self._liggghts, atom_style)
+
         else:
             self._data_manager = LiggghtsFileIoDataManager(atom_style)
 
@@ -192,50 +192,52 @@ class LiggghtsWrapper(ABCModelingEngine):
                 partcont = self.get_dataset(name)
 
             self.SP_extension[CUBAExtension.BOX_VECTORS] = \
-								partcont.data_extension[CUBAExtension.BOX_VECTORS]
+                partcont.data_extension[
+                                    CUBAExtension.BOX_VECTORS]
             self.SP_extension[CUBAExtension.BOX_ORIGIN] = \
-								partcont.data_extension[CUBAExtension.BOX_ORIGIN]
-            
-            ScriptWriter.check_configuration_SP(
-								_combine(self.SP, self.SP_extension))
-            ScriptWriter.check_configuration_BC(
-								_combine(self.BC, self.BC_extension))
-            ScriptWriter.check_configuration_CM(
-								_combine(self.CM, self.CM_extension))
+                partcont.data_extension[
+                                    CUBAExtension.BOX_ORIGIN]
 
-            # Flush radius once to give liggghts the required information for 
-			# cutoff distances
+            ScriptWriter.check_configuration_SP(
+                                _combine(self.SP, self.SP_extension))
+            ScriptWriter.check_configuration_BC(
+                                _combine(self.BC, self.BC_extension))
+            ScriptWriter.check_configuration_CM(
+                                _combine(self.CM, self.CM_extension))
+
+            # Flush radius once to give liggghts the required information for
+            # cutoff distances
             self._data_manager.flush_radius()
 
             commands = ""
 
             commands += ScriptWriter.get_pair_style_liggghts(
-								_combine(self.SP, self.SP_extension))
+                                _combine(self.SP, self.SP_extension))
 
             commands += "pair_coeff      * *\n"
 
             commands += ScriptWriter.get_material_data(
-								_combine(self.SP, self.SP_extension))
+                                _combine(self.SP, self.SP_extension))
 
             commands += ScriptWriter.get_boundary(
-								_combine(self.BC, self.BC_extension),
-								change_existing_boundary=True)
+                                _combine(self.BC, self.BC_extension),
+                                change_existing_boundary=True)
 
             commands += "fix 1 all nve\n"
 
             commands += ScriptWriter.get_box_planes(
-								_combine(self.SP, self.SP_extension),
-								_combine(self.BC, self.BC_extension))
+                                _combine(self.SP, self.SP_extension),
+                                _combine(self.BC, self.BC_extension))
 
             commands += ScriptWriter.get_fixed_groups(
-								_combine(self.BC, self.BC_extension))
+                            _combine(self.BC, self.BC_extension))
 
             commands += "group group_1 type 1\n"
 
             for command in commands.splitlines():
                 self._liggghts.command(command)
 
-            # Extra treatment for external forces, since df vector must 
+            # Extra treatment for external forces, since df vector must
             # be updated for the case of particle(s) addition or removal
             commands = ""
             commands += ScriptWriter.get_ext_forces(self)
@@ -247,8 +249,8 @@ class LiggghtsWrapper(ABCModelingEngine):
             self._data_manager.flush()
 
             commands = ""
-            commands += ScriptWriter.get_run(CM=
-								_combine(self.CM, self.CM_extension))
+            commands += \
+                ScriptWriter.get_run(CM=_combine(self.CM, self.CM_extension))
 
             for command in commands.splitlines():
                 self._liggghts.command(command)
@@ -272,9 +274,9 @@ class LiggghtsWrapper(ABCModelingEngine):
                     partcont = self.get_dataset(name)
 
                 self.SP_extension[CUBAExtension.BOX_VECTORS] = \
-					partcont.data_extension[CUBAExtension.BOX_VECTORS]
+                    partcont.data_extension[CUBAExtension.BOX_VECTORS]
                 self.SP_extension[CUBAExtension.BOX_ORIGIN] = \
-					partcont.data_extension[CUBAExtension.BOX_ORIGIN]
+                    partcont.data_extension[CUBAExtension.BOX_ORIGIN]
 
                 commands = self._script_writer.get_configuration(
                     input_data_file=input_data_filename,
@@ -283,7 +285,7 @@ class LiggghtsWrapper(ABCModelingEngine):
                     CM=_combine(self.CM, self.CM_extension),
                     SP=_combine(self.SP, self.SP_extension))
                 process = LiggghtsProcess(liggghts_name=self._executable_name,
-											log_directory=temp_dir)
+                                          log_directory=temp_dir)
                 process.run(commands)
 
                 # after running, we read any changes from liggghts

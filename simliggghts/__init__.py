@@ -58,4 +58,4 @@ class SimliggghtsExtension(ABCEngineExtension):
                             'Unsupported eninge: %s', engine_name)
 
         return LiggghtsWrapper(cuds=cuds,
-                             use_internal_interface=use_internal_interface)
+                               use_internal_interface=use_internal_interface)

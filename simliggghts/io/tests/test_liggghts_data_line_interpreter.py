@@ -11,7 +11,7 @@ class TestLiggghtsDataLineInterpreter(unittest.TestCase):
 
     def test_interpret_sphere_atoms(self):
         interpreter = LiggghtsDataLineInterpreter(
-						atom_style=AtomStyle.GRANULAR)
+                        atom_style=AtomStyle.GRANULAR)
 
         # Atoms # sphere
         # 1 1 0.5 1.000000000000e+00 -5.0 0.0 0.00000000e+00 0 0 0
@@ -24,7 +24,7 @@ class TestLiggghtsDataLineInterpreter(unittest.TestCase):
 
     def test_interpret_sphere_velocities(self):
         interpreter = LiggghtsDataLineInterpreter(
-						atom_style=AtomStyle.GRANULAR)
+                        atom_style=AtomStyle.GRANULAR)
 
         # Velocities
         # 1 0.0000000e+00 0.100000e+00 0.200000000e+00 2.0e+00 2.1e+00 2.2e+00

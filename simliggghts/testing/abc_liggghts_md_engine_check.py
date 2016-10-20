@@ -85,7 +85,7 @@ class ABCLiggghtsMDEngineCheck(object):
         self.wrapper.SP[CUBA.FRICTION_COEFFICIENT] = [0.1, 0.0, 0.0, 0.0]
         # BC
         self.wrapper.BC_extension[CUBAExtension.BOX_FACES] = \
-										["periodic", "periodic", "periodic"]
+                                 ["periodic", "periodic", "periodic"]
         self.wrapper.BC_extension[CUBAExtension.FIXED_GROUP] = [0, 0]
         foo = Particles(name="foo")
         particles_uids = []
@@ -131,8 +131,8 @@ class ABCLiggghtsMDEngineCheck(object):
                                 p.data[CUBA.ANGULAR_VELOCITY])
             assert_almost_equal(p_w.data[CUBA.DENSITY], p.data[CUBA.DENSITY])
             assert_almost_equal(p_w.data[CUBA.RADIUS], p.data[CUBA.RADIUS])
-            assert_almost_equal(p_w.data[CUBA.EXTERNAL_APPLIED_FORCE], 
-								p.data[CUBA.EXTERNAL_APPLIED_FORCE])
+            assert_almost_equal(p_w.data[CUBA.EXTERNAL_APPLIED_FORCE],
+                                p.data[CUBA.EXTERNAL_APPLIED_FORCE])
 
         # run liggghts-engine for 0 steps
         self.wrapper.CM[CUBA.NUMBER_OF_TIME_STEPS] = 0
@@ -149,8 +149,8 @@ class ABCLiggghtsMDEngineCheck(object):
                                 p.data[CUBA.ANGULAR_VELOCITY])
             assert_almost_equal(p_w.data[CUBA.DENSITY], p.data[CUBA.DENSITY])
             assert_almost_equal(p_w.data[CUBA.RADIUS], p.data[CUBA.RADIUS])
-            assert_almost_equal(p_w.data[CUBA.EXTERNAL_APPLIED_FORCE], 
-								p.data[CUBA.EXTERNAL_APPLIED_FORCE])
+            assert_almost_equal(p_w.data[CUBA.EXTERNAL_APPLIED_FORCE],
+                                p.data[CUBA.EXTERNAL_APPLIED_FORCE])
 
         # update again
         p = foo.get_particle(uid_to_update)

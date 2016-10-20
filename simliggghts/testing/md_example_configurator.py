@@ -50,7 +50,7 @@ class MDExampleConfigurator:
             material_types = set(material_types)
 
         # SP
-        
+
         wrapper.SP[CUBA.YOUNG_MODULUS] = [2.e4, 2.e4]
         wrapper.SP[CUBA.POISSON_RATIO] = [0.45, 0.45]
         wrapper.SP[CUBA.RESTITUTION_COEFFICIENT] = [0.95, 0.95, 0.95, 0.95]
@@ -61,7 +61,7 @@ class MDExampleConfigurator:
 
         # BC
         wrapper.BC_extension[CUBAExtension.BOX_FACES] = \
-								["periodic", "periodic", "periodic"]
+                            ["periodic", "periodic", "periodic"]
         wrapper.BC_extension[CUBAExtension.FIXED_GROUP] = [0, 0]
 
     @staticmethod

@@ -65,8 +65,8 @@ class LiggghtsDataFileParser(object):
                         values = line.split()
                         id = int(values[0])
                         type_coord_etc = [int(values[1])]
-                        for v in map(float, values[2:7]): 
-							# The 7 is hard coded here to follow the data 
+                        for v in map(float, values[2:7]):
+                            # The 7 is hard coded here to follow the data
                             # file format form Liggghts sphere
                             type_coord_etc.append(v)
                         self._handler.process_atoms(id, type_coord_etc)

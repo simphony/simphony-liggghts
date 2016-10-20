@@ -71,8 +71,8 @@ class LiggghtsDataLineInterpreter(object):
             else:
                 cuba_values[value_info.cuba_key], index = \
                     LiggghtsDataLineInterpreter.process_value(value_info,
-																values,
-																index)
+                                                              values,
+                                                              index)
         # coordinates come next
         coordinates = tuple(values[index:index+3])
 
@@ -99,8 +99,8 @@ class LiggghtsDataLineInterpreter(object):
         for value_info in atom_style_description.velocity_attributes:
             cuba_velocity_values[value_info.cuba_key], index = \
                 LiggghtsDataLineInterpreter.process_value(value_info,
-															values,
-															index)
+                                                          values,
+                                                          index)
 
         return cuba_velocity_values
 
