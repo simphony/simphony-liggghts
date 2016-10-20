@@ -22,8 +22,6 @@ before_install:
 
 install:
   # build and install liggghts
-  #- mkdir -p $HOME/.local/bin
-  #- export PATH=$HOME/.local/bin:$PATH
   - ./install_external.sh
   - export PATH=$PATH:$PWD/myliggghts/src/
   - pip install -r dev_requirements.txt
