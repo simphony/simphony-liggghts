@@ -1,7 +1,7 @@
 #!/bin/bash
-set -e
+# set -e
 
-if [ -z "$PYTHON_LIB_DIR" ]; then echo "Set PYTHON_LIB_DIR variable to location of where LIGGGHTS shared library and liggghts.py should be installed (currently using default)"; fi
+# if [ -z "$PYTHON_LIB_DIR" ]; then echo "Set PYTHON_LIB_DIR variable to location of where LIGGGHTS shared library and liggghts.py should be installed (currently using default)"; fi
 
 PYTHON_LIB_DIR=${PYTHON_LIB_DIR:-$VIRTUAL_ENV/lib/python2.7/site-packages/}
 
@@ -33,6 +33,7 @@ make  -j 2 -f Makefile.shlib fedora_fpic
 ln -s libliggghts_fedora_fpic.so libliggghts.so
 popd
 
+
 echo "Installing LIGGGHTS python wrapper"
 pushd myliggghts/python
 # The install script expects `liggghts.py` name.
@@ -41,6 +42,7 @@ cp lammps.py liggghts.py
 export LD_LIBRARY_PATH=$PYTHON_LIB_DIR:$LD_LIBRARY_PATH
 python install.py $PYTHON_LIB_DIR $PYTHON_LIB_DIR
 popd
+
 python check_liggghts_python.py
 
 echo "Add $PYTHON_LIB_DIR to your LD_LIBRARY_PATH in case of failure"

@@ -7,16 +7,16 @@ from ..cuba_extension import CUBAExtension
 # TODO add more pair styles for the different types
 # TODO add optional pair params
 _supported_pair_styles = {"hertz": {"pair_style":
-                                        "gran model hertz tangential history",
-                                        "required_global_params":
-                                            ["global_cutoff"],
-                                        "required_pair_params":
-                                            ["epsilon", "sigma", "cutoff"]},
+                                    "gran model hertz tangential history",
+                                    "required_global_params":
+                                        ["global_cutoff"],
+                                    "required_pair_params":
+                                        ["epsilon", "sigma", "cutoff"]},
                           "sjkr": {"pair_style": "cohesion sjkr",
                                    "required_global_params":
-                                            ["global_cutoff"],
+                                        ["global_cutoff"],
                                    "required_pair_params":
-                                            ["cutoff"]},
+                                        ["cutoff"]},
                           }
 
 

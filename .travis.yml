@@ -23,7 +23,10 @@ before_install:
 install:
   # build and install liggghts
   - ./install_external.sh
+  # Set paths manually for the case of installation procedure failed
   - export PATH=$PATH:$PWD/myliggghts/src/
+  - export PYTHON_PATH=$PYTHON_PATH:$PWD/myliggghts/python/
+  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/myliggghts/src/
   - pip install -r dev_requirements.txt
   - pip install git+https://github.com/simphony/simphony-common.git@${SIMPHONY_VERSION}#egg=simphony
   - pip install -r doc_requirements.txt

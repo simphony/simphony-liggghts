@@ -9,7 +9,8 @@ from simliggghts.testing.abc_liggghts_md_engine_check import\
 from simliggghts.testing.md_example_configurator import MDExampleConfigurator
 
 
-class TestLiggghtsMDEngineINTERNAL(ABCLiggghtsMDEngineCheck, unittest.TestCase):
+class TestLiggghtsMDEngineINTERNAL(ABCLiggghtsMDEngineCheck,
+                                   unittest.TestCase):
 
     def setUp(self):
         ABCLiggghtsMDEngineCheck.setUp(self)
