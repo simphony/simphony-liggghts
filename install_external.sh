@@ -5,7 +5,8 @@ if [ -z "$PYTHON_LIB_DIR" ]; then echo "Set PYTHON_LIB_DIR variable to location 
 
 PYTHON_LIB_DIR=${PYTHON_LIB_DIR:-$VIRTUAL_ENV/lib/python2.7/site-packages/}
 
-#echo "Installing python LIGGGHTS wrapper to '$PYTHON_LIB_DIR'"
+echo "Installing python LIGGGHTS wrapper to '$PYTHON_LIB_DIR'"
+
 
 echo "Checking out the most recent release of liggghts - 3.4.0 from 17 May 2016"
 git clone --branch 3.4.0 --depth 1 git://github.com/CFDEMproject/LIGGGHTS-PUBLIC.git myliggghts
