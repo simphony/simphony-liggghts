@@ -5,6 +5,10 @@ if [ -z "$PYTHON_LIB_DIR" ]; then echo "Set PYTHON_LIB_DIR variable to location 
 
 PYTHON_LIB_DIR=${PYTHON_LIB_DIR:-$VIRTUAL_ENV/lib/python2.7/site-packages/}
 
+# Create folder for liggghts executable storage
+mkdir -p $HOME/.local/bin
+export PATH=$PATH:$HOME/.local/bin
+
 echo "Installing python LIGGGHTS wrapper to '$PYTHON_LIB_DIR'"
 
 
