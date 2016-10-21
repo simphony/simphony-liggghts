@@ -6,13 +6,13 @@ from simphony.core.cuba import CUBA
 from simphony.core.keywords import KEYWORDS
 
 from ..common.atom_style_description import ATOM_STYLE_DESCRIPTIONS
-from ..common.atom_style import get_lammps_string
+from ..common.atom_style import get_liggghts_string
 
 
-class LammpsDataFileWriter(object):
-    """  Class writes Lammps data file
+class LiggghtsDataFileWriter(object):
+    """  Class writes Liggghts data file
 
-    Lammps data file (a file type produced by lammps command
+    Liggghts data file (a file type produced by Liggghts command
     `write_data`) contains a list of atoms and/or bonds. This
     class provides the means to write such file.
 
@@ -45,8 +45,8 @@ class LammpsDataFileWriter(object):
         self._written_atoms = 0
         self._velocity_lines = []
 
-        lines = ["LAMMPS data file via write_data"
-                 ", file written by SimPhony-Lammps,  {}\n\n".format(
+        lines = ["Liggghts data file via write_data"
+                 ", file written by SimPhony-Liggghts,  {}\n\n".format(
                      time.asctime(time.localtime()))]
 
         lines.append('{} atoms\n'.format(number_atoms))
@@ -65,7 +65,7 @@ class LammpsDataFileWriter(object):
         self._file.writelines(lines)
 
         self._file.write("\nAtoms # {}\n\n".format(
-            get_lammps_string(self._atom_style)))
+            get_liggghts_string(self._atom_style)))
 
     def write_atom(self, particle, material_type):
         """ Write an atom
@@ -89,8 +89,8 @@ class LammpsDataFileWriter(object):
 
         Returns
         -------
-        lammps_id : int
-            id used by lammps in file
+        Liggghts_id : int
+            id used by Liggghts in file
 
         """
         self._written_atoms += 1
@@ -98,11 +98,11 @@ class LammpsDataFileWriter(object):
         if self._written_atoms > self._number_atoms:
             raise RuntimeError("Trying to write more atoms than expected")
 
-        lammps_id = self._written_atoms
+        liggghts_id = self._written_atoms
         atom_type = material_type
 
         # first comes 'id' and 'type'
-        atom_line = '{0} {1}'.format(lammps_id, atom_type)
+        atom_line = '{0} {1}'.format(liggghts_id, atom_type)
 
         # then write everything that is specific to this atom_style
         atom_description = ATOM_STYLE_DESCRIPTIONS[self._atom_style]
@@ -120,7 +120,7 @@ class LammpsDataFileWriter(object):
         self._file.write(atom_line)
 
         # save velocity line which will be written later
-        velocity_line = '{0}'.format(lammps_id)
+        velocity_line = '{0}'.format(liggghts_id)
         for info in atom_description.velocity_attributes:
             value = info.convert_from_cuba(particle.data[info.cuba_key]) \
                 if info.convert_from_cuba else particle.data[info.cuba_key]
@@ -134,7 +134,7 @@ class LammpsDataFileWriter(object):
             self._file.writelines(self._velocity_lines)
             self._file.write("\n")
 
-        return lammps_id
+        return liggghts_id
 
     def close(self):
         self._file.close()

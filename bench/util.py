@@ -28,9 +28,9 @@ def get_particles(y_range):
     data_name = os.path.join(temp_dir, "output")
     try:
         with open(script_name, "w") as script_file:
-            script_file.write(lammps_script.format(y_range=y_range,
-                                                   data_name=data_name))
-        cmd = ("lammps -screen none"
+            script_file.write(liggghts_script.format(y_range=y_range,
+                                                     data_name=data_name))
+        cmd = ("liggghts -screen none"
                " -log none -echo none"
                " < {}").format(script_name)
         subprocess.check_call(cmd, shell=True)
@@ -40,7 +40,7 @@ def get_particles(y_range):
     return particles_list
 
 
-lammps_script = """# create particles"
+liggghts_script = """# create particles"
 dimension	2
 atom_style	granular
 
@@ -65,5 +65,5 @@ group	     flow subtract all boundary
 set          group lower type 2
 set          group upper type 3
 
-# write atoms to a lammps data file
+# write atoms to a liggghts data file
 write_data {data_name}"""

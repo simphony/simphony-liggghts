@@ -2,24 +2,18 @@ from .liggghts_wrapper import LiggghtsWrapper
 from .cuba_extension import CUBAExtension
 from .io.file_utility import read_data_file
 
-__all__ = ["LiggghtsWrapper", "CUBAExtension", "read_data_file"]
-
 from simphony.engine import ABCEngineExtension
 from simphony.engine import EngineInterface
 from simphony.engine.decorators import register
-
-from .liggghts_wrapper import LiggghtsWrapper
-from .cuba_extension import CUBAExtension
-from .io.file_utility import read_data_file
 
 __all__ = ["LiggghtsWrapper", "EngineType", "CUBAExtension", 'read_data_file']
 
 
 @register
 class SimliggghtsExtension(ABCEngineExtension):
-    """Simphony-lammps-md extension.
+    """Simphony-liggghts extension.
 
-    This extension provides support for lammps and liggghts engines.
+    This extension provides support for liggghts engines.
     """
 
     def get_supported_engines(self):
@@ -64,4 +58,4 @@ class SimliggghtsExtension(ABCEngineExtension):
                             'Unsupported eninge: %s', engine_name)
 
         return LiggghtsWrapper(cuds=cuds,
-                       	       use_internal_interface=use_internal_interface)
+                               use_internal_interface=use_internal_interface)

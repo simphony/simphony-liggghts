@@ -1,4 +1,4 @@
-""" LAMMPS Process
+""" LIGGGHTS Process
 
 This module provides a way to run the liggghts
 """
@@ -7,12 +7,12 @@ import os
 import subprocess
 
 
-class LammpsProcess(object):
+class LiggghtsProcess(object):
     """ Class runs the liggghts program
 
     Parameters
     ----------
-    lammps_name : str
+    liggghts_name : str
         name of LIGGGHTS executable
     log_directory : str, optional
         name of directory of log file ('log.liggghts') for liggghts.
@@ -23,8 +23,8 @@ class LammpsProcess(object):
     RuntimeError
         if liggghts did not run correctly
     """
-    def __init__(self, lammps_name="liggghts", log_directory=None):
-        self._lammps_name = lammps_name
+    def __init__(self, liggghts_name="liggghts", log_directory=None):
+        self._liggghts_name = liggghts_name
         self._returncode = 0
         self._stderr = ""
         self._stdout = ""
@@ -33,19 +33,19 @@ class LammpsProcess(object):
         else:
             self._log = 'log.liggghts'
 
-        # see if lammps can be started
+        # see if liggghts can be started
         try:
             self.run(" ")
         except Exception:
             msg = "LIGGGHTS could not be started."
             if self._returncode == 127:
-                msg += " executable '{}' was not found.".format(lammps_name)
+                msg += " executable '{}' was not found.".format(liggghts_name)
             else:
                 msg += " stdout/err: " + self._stdout + " " + self._stderr
             raise RuntimeError(msg)
 
     def run(self, commands):
-        """Run lammps with a set of commands
+        """Run liggghts with a set of commands
 
         Parameters
         ----------
@@ -55,18 +55,18 @@ class LammpsProcess(object):
         Raises
         ------
         RuntimeError
-            if Lammps did not run correctly
+            if Liggghts did not run correctly
         """
 
         proc = subprocess.Popen(
-            [self._lammps_name, '-log', self._log], stdin=subprocess.PIPE,
+            [self._liggghts_name, '-log', self._log], stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         self._stdout, self._stderr = proc.communicate(commands)
         self._returncode = proc.returncode
 
         if self._returncode != 0 or self._stderr:
             msg = "LIGGGHTS ('{}') did not run correctly. ".format(
-                self._lammps_name)
+                self._liggghts_name)
             msg += "Error code: {} ".format(proc.returncode)
             if self._stderr:
                 msg += "stderr: \'{}\n\' ".format(self._stderr)

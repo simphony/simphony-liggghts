@@ -1,44 +1,44 @@
 IO
 =======
 
-A module containing FILE-IO related for simlammps
+A module containing FILE-IO related for simliggghts
 
 .. rubric:: Classes
 
-.. currentmodule:: simlammps.io
+.. currentmodule:: simliggghts.io
 
 .. autosummary::
 
     ~file_utility.read_data_file
-    ~lammps_data_file_parser.LammpsDataFileParser
-    ~lammps_simple_data_handler.LammpsSimpleDataHandler
-    ~lammps_data_line_interpreter.LammpsDataLineInterpreter
-    ~lammps_process.LammpsProcess
+    ~liggghts_data_file_parser.LiggghtsDataFileParser
+    ~liggghts_simple_data_handler.LiggghtsSimpleDataHandler
+    ~liggghts_data_line_interpreter.LiggghtsDataLineInterpreter
+    ~liggghts_process.LiggghtsProcess
 
 
 .. rubric:: Implementation
 
-.. automodule:: simlammps.io.file_utility
+.. automodule:: simliggghts.io.file_utility
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: simlammps.io.lammps_data_file_parser
+.. automodule:: simliggghts.io.liggghts_data_file_parser
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: simlammps.io.lammps_simple_data_handler
+.. automodule:: simliggghts.io.liggghts_simple_data_handler
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: simlammps.io.lammps_data_line_interpreter
+.. automodule:: simliggghts.io.liggghts_data_line_interpreter
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: simlammps.io.lammps_process
+.. automodule:: simliggghts.io.liggghts_process
    :members:
    :undoc-members:
    :show-inheritance:

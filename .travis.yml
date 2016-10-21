@@ -1,9 +1,13 @@
 language: python
 python:
   - "2.7"
-
+  
+cache:
+  pip: true
+  directories:
+  - $HOME/.ccache
+  
 env:
-  - SIMPHONY_VERSION=0.2.0
   - SIMPHONY_VERSION=master
 matrix:
   allow_failures:
@@ -11,11 +15,18 @@ matrix:
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install mpi-default-bin mpi-default-dev
+  - sudo apt-get install mpi-default-bin mpi-default-dev ccache
+  - sudo ln -s ccache /usr/local/bin/mpic++
+  - export PATH=/usr/lib/ccache:${PATH}
+  - ccache -s
 
 install:
   # build and install liggghts
   - ./install_external.sh
+  # Set paths manually for the case of installation procedure failed
+  - export PATH=$PATH:$PWD/myliggghts/src/
+  - export PYTHON_PATH=$PYTHON_PATH:$PWD/myliggghts/python/
+  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/myliggghts/src/
   - pip install -r dev_requirements.txt
   - pip install git+https://github.com/simphony/simphony-common.git@${SIMPHONY_VERSION}#egg=simphony
   - pip install -r doc_requirements.txt
@@ -25,7 +36,6 @@ script:
   - flake8 --exclude=myliggghts .
   - coverage run -m unittest discover
   - python setup.py build_sphinx
-  - cd examples/dem_billiards/; python dem_billiards.py
 
 after_success:
   - pip install codecov

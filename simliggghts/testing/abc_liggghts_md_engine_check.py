@@ -11,6 +11,8 @@ from simphony.cuds.particles import Particles, Particle
 
 from .md_example_configurator import MDExampleConfigurator
 
+from ..cuba_extension import CUBAExtension
+
 
 def _create_pc(name):
     """ create particle container with a few particles """
@@ -38,7 +40,7 @@ def _get_particle(wrapper):
         raise RuntimeError("could not find a particle to test with")
 
 
-class ABCLammpsMDEngineCheck(object):
+class ABCLiggghtsMDEngineCheck(object):
 
     __metaclass__ = abc.ABCMeta
 
@@ -75,11 +77,16 @@ class ABCLammpsMDEngineCheck(object):
             particles.get_particle(removed_particle.uid)
 
     def test_0_step_run(self):
-        MDExampleConfigurator.configure_wrapper(self.wrapper)
-        self.wrapper.SP[CUBA.YOUNG_MODULUS] = [1000]
-        self.wrapper.SP[CUBA.POISSON_RATIO] = [0.3]
-        self.wrapper.SP[CUBA.RESTITUTION_COEFFICIENT] = [0.9]
-        self.wrapper.SP[CUBA.FRICTION_COEFFICIENT] = [0.1]
+        # CM
+        self.wrapper.CM[CUBA.TIME_STEP] = 0.003
+        self.wrapper.SP[CUBA.YOUNG_MODULUS] = [1000, 2000]
+        self.wrapper.SP[CUBA.POISSON_RATIO] = [0.3, 0.25]
+        self.wrapper.SP[CUBA.RESTITUTION_COEFFICIENT] = [0.9, 1.0, 1.0, 0.8]
+        self.wrapper.SP[CUBA.FRICTION_COEFFICIENT] = [0.1, 0.0, 0.0, 0.0]
+        # BC
+        self.wrapper.BC_extension[CUBAExtension.BOX_FACES] = \
+                                 ["periodic", "periodic", "periodic"]
+        self.wrapper.BC_extension[CUBAExtension.FIXED_GROUP] = [0, 0]
         foo = Particles(name="foo")
         particles_uids = []
         for i in range(0, 5):
@@ -87,8 +94,8 @@ class ABCLammpsMDEngineCheck(object):
             p.data[CUBA.VELOCITY] = (0+0.001*i, 0+0.0001*i, 0+0.0001*i)
             p.data[CUBA.ANGULAR_VELOCITY] = (0-0.001*i, 0-0.0001*i, 0-0.0001*i)
             p.data[CUBA.DENSITY] = (0.5)
-            p.data[CUBA.MASS] = (1.0)
             p.data[CUBA.RADIUS] = (0.5)
+            p.data[CUBA.EXTERNAL_APPLIED_FORCE] = (0.0, 0.0, 0.0)
             uids = foo.add_particles([p])
             particles_uids.extend(uids)
 
@@ -110,6 +117,7 @@ class ABCLammpsMDEngineCheck(object):
         p.data[CUBA.ANGULAR_VELOCITY] = (0.0042, 0.0042, 0.0042)
         p.data[CUBA.DENSITY] = (0.25)
         p.data[CUBA.RADIUS] = (0.4)
+        p.data[CUBA.EXTERNAL_APPLIED_FORCE] = (0.25, 0.25, 0.25)
 
         foo.update_particles([p])
         foo_w.update_particles([p])
@@ -123,8 +131,10 @@ class ABCLammpsMDEngineCheck(object):
                                 p.data[CUBA.ANGULAR_VELOCITY])
             assert_almost_equal(p_w.data[CUBA.DENSITY], p.data[CUBA.DENSITY])
             assert_almost_equal(p_w.data[CUBA.RADIUS], p.data[CUBA.RADIUS])
+            assert_almost_equal(p_w.data[CUBA.EXTERNAL_APPLIED_FORCE],
+                                p.data[CUBA.EXTERNAL_APPLIED_FORCE])
 
-        # run lammps-engine for 0 steps
+        # run liggghts-engine for 0 steps
         self.wrapper.CM[CUBA.NUMBER_OF_TIME_STEPS] = 0
         self.wrapper.run()
 
@@ -139,6 +149,8 @@ class ABCLammpsMDEngineCheck(object):
                                 p.data[CUBA.ANGULAR_VELOCITY])
             assert_almost_equal(p_w.data[CUBA.DENSITY], p.data[CUBA.DENSITY])
             assert_almost_equal(p_w.data[CUBA.RADIUS], p.data[CUBA.RADIUS])
+            assert_almost_equal(p_w.data[CUBA.EXTERNAL_APPLIED_FORCE],
+                                p.data[CUBA.EXTERNAL_APPLIED_FORCE])
 
         # update again
         p = foo.get_particle(uid_to_update)

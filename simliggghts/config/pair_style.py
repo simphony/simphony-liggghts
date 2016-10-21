@@ -6,14 +6,17 @@ from ..cuba_extension import CUBAExtension
 # here is the info to create the different pair info handlers
 # TODO add more pair styles for the different types
 # TODO add optional pair params
-_supported_pair_styles = {"hertz": {"pair_style": "gran model hertz tangential history",
-                                 "required_global_params": ["global_cutoff"],
-                                 "required_pair_params":
-                                 ["epsilon", "sigma", "cutoff"]},
+_supported_pair_styles = {"hertz": {"pair_style":
+                                    "gran model hertz tangential history",
+                                    "required_global_params":
+                                        ["global_cutoff"],
+                                    "required_pair_params":
+                                        ["epsilon", "sigma", "cutoff"]},
                           "sjkr": {"pair_style": "cohesion sjkr",
-                                   "required_global_params": ["global_cutoff"],
+                                   "required_global_params":
+                                        ["global_cutoff"],
                                    "required_pair_params":
-                                   ["cutoff"]},
+                                        ["cutoff"]},
                           }
 
 
@@ -21,7 +24,7 @@ class PairStyle(object):
     """ A PairStyle instance
 
     The PairStyle object interprets the configuration of the SP
-    to determine the pairwise interaction of atoms in LAMMPS
+    to determine the pairwise interaction of atoms in LIGGGHTS
 
 
     """

@@ -4,15 +4,16 @@ from simphony.testing.abc_check_engine import ParticlesEngineCheck
 from simphony.cuds.abc_particles import ABCParticles
 
 from simliggghts.liggghts_wrapper import LiggghtsWrapper
-from simliggghts.testing.abc_lammps_md_engine_check import\
-    ABCLammpsMDEngineCheck
+from simliggghts.testing.abc_liggghts_md_engine_check import\
+    ABCLiggghtsMDEngineCheck
 from simliggghts.testing.md_example_configurator import MDExampleConfigurator
 
 
-class TestLammpsMDEngineINTERNAL(ABCLammpsMDEngineCheck, unittest.TestCase):
+class TestLiggghtsMDEngineINTERNAL(ABCLiggghtsMDEngineCheck,
+                                   unittest.TestCase):
 
     def setUp(self):
-        ABCLammpsMDEngineCheck.setUp(self)
+        ABCLiggghtsMDEngineCheck.setUp(self)
 
     def engine_factory(self):
         return LiggghtsWrapper(use_internal_interface=True)

@@ -3,19 +3,20 @@ import tempfile
 import shutil
 import os
 
-from simliggghts.io.lammps_data_file_parser import LammpsDataFileParser
-from simliggghts.io.lammps_simple_data_handler import LammpsSimpleDataHandler
+from simliggghts.io.liggghts_data_file_parser import LiggghtsDataFileParser
+from simliggghts.io.liggghts_simple_data_handler import \
+                                                     LiggghtsSimpleDataHandler
 
 
-class TestLammpsSimpleDataHandler(unittest.TestCase):
+class TestLiggghtsSimpleDataHandler(unittest.TestCase):
     """ Tests the data reader class
 
     """
     def setUp(self):
         self.temp_dir = tempfile.mkdtemp()
 
-        self.handler = LammpsSimpleDataHandler()
-        self.parser = LammpsDataFileParser(handler=self.handler)
+        self.handler = LiggghtsSimpleDataHandler()
+        self.parser = LiggghtsDataFileParser(handler=self.handler)
         self.filename = os.path.join(self.temp_dir, "test_data.txt")
 
         _write_example_file(self.filename, _data_file_contents)
@@ -48,7 +49,7 @@ def _write_example_file(filename, contents):
     with open(filename, "w") as text_file:
             text_file.write(contents)
 
-_data_file_contents = """LAMMPS data file via write_data, version 28 Jun 2014, timestep = 0
+_data_file_contents = """LIGGGHTS data file via write_data, version 28 Jun 2014, timestep = 0
 
 4 atoms
 3 atom types

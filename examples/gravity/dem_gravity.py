@@ -61,6 +61,10 @@ def gravity_example(show):
         # Particle mass modification
         dens = 2.0
         par.data[CUBA.DENSITY] = dens
+
+        rad = par.data[CUBA.RADIUS]
+        par.data[CUBA.MASS] = rad * rad * rad * 4.0 / 3.0 * 3.141592654 * dens
+
         pc_fall.update_particles([par])
 
         # External force field (gravity)

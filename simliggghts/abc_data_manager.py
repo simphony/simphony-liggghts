@@ -1,18 +1,18 @@
 import uuid
 import abc
 
-from .lammps_particles import LammpsParticles
+from .liggghts_particles import LiggghtsParticles
 
 
 class ABCDataManager(object):
-    """  Class managing Lammps data information
+    """  Class managing Liggghts data information
 
-    The class performs communicating the data to and from lammps. The
-    class manages data existing in Lammps and allows this data to be
+    The class performs communicating the data to and from liggghts. The
+    class manages data existing in Liggghts and allows this data to be
     queried and to be changed.
 
-    Class maintains and provides LammpsParticles (which implements
-    the ABCParticles class).  The queries and changes to LammpsParticles
+    Class maintains and provides LiggghtsParticles (which implements
+    the ABCParticles class).  The queries and changes to LiggghtsParticles
     occurs through the many abstract methods in this class.  See subclasses
     to understand how the communication occurs.
 
@@ -27,7 +27,7 @@ class ABCDataManager(object):
         # map from unique name to names
         self._names = {}
 
-        # dictionary of lammps_particle
+        # dictionary of liggghts_particle
         # where the the key is the unique name
         self._lpcs = {}
 
@@ -83,7 +83,7 @@ class ABCDataManager(object):
         return self._lpcs[self._unames[name]]
 
     def __delitem__(self, name):
-        """Deletes lammps particle container and associated cache
+        """Deletes liggghts particle container and associated cache
 
         """
         self._handle_delete_particles(self._unames[name])
@@ -100,7 +100,7 @@ class ABCDataManager(object):
 
         Returns
         -------
-        LammpsParticles
+        LiggghtsParticles
 
         """
 
@@ -111,12 +111,12 @@ class ABCDataManager(object):
         self._unames[particles.name] = uname
         self._names[uname] = particles.name
 
-        lammps_pc = LammpsParticles(self, uname)
-        self._lpcs[uname] = lammps_pc
+        liggghts_pc = LiggghtsParticles(self, uname)
+        self._lpcs[uname] = liggghts_pc
 
         self._handle_new_particles(uname, particles)
-        
-        return lammps_pc
+
+        return liggghts_pc
 
     @abc.abstractmethod
     def _handle_delete_particles(self, uname):
@@ -292,7 +292,7 @@ class ABCDataManager(object):
         Parameters
         ----------
         input_data_filename : string, optional
-            name of data-file where inform is written to (i.e lammps's input).
+          name of data-file where inform is written to (i.e liggghts's input).
         """
 
     @abc.abstractmethod
@@ -302,5 +302,5 @@ class ABCDataManager(object):
         Parameters
         ----------
         output_data_filename : string, optional
-            name of data-file where info read from (i.e lammps's output).
+            name of data-file where info read from (i.e liggghts's output).
         """
