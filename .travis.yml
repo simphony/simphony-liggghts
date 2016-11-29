@@ -9,9 +9,13 @@ cache:
   
 env:
   - SIMPHONY_VERSION=master
+  - SIMPHONY_VERSION=0.3.0
+  - SIMPHONY_VERSION=413eb6f5683c4733b943c300c3192265c79ac26b
 matrix:
   allow_failures:
-    - env: SIMPHONY_VERSION=master
+    - env: 
+        - SIMPHONY_VERSION=master
+        - SIMPHONY_VERSION=0.3.0
 
 before_install:
   - sudo apt-get update -qq
