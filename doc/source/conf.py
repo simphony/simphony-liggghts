@@ -33,6 +33,7 @@ def mock_modules():
     sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
     print 'mocking modules {}'.format(MOCK_MODULES)
 
+
 # -- General configuration ------------------------------------------------
 # check and mock missing modules
 mock_modules()
