@@ -49,6 +49,7 @@ def _write_example_file(filename, contents):
     with open(filename, "w") as text_file:
             text_file.write(contents)
 
+
 _data_file_contents = """LIGGGHTS data file via write_data, version 28 Jun 2014, timestep = 0
 
 4 atoms

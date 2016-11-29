@@ -65,8 +65,8 @@ def describe(name, number_particles, number_steps, is_internal):
 def run_test(func, wrapper):
     func(wrapper)
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     run_wrapper_tests = [_Tests(method=run,
                                 name="run"),
                          _Tests(method=run_iterate,
