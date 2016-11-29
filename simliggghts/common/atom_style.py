@@ -7,6 +7,7 @@ class AtomStyle(Enum):
     """
     GRANULAR = 1
 
+
 # mapping from liggghts style to AtomStyle
 LIGGGHTS_STYLE = {'granular': AtomStyle.GRANULAR}
 

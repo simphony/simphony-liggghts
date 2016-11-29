@@ -34,7 +34,6 @@ def mock_modules():
     print 'mocking modules {}'.format(MOCK_MODULES)
 
 # -- General configuration ------------------------------------------------
-
 # check and mock missing modules
 mock_modules()
 
