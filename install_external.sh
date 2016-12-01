@@ -1,16 +1,14 @@
 #!/bin/bash
 set -e
 
-if [ -z "$PYTHON_LIB_DIR" ]; then echo "Set PYTHON_LIB_DIR variable to location of where LIGGGHTS shared library and liggghts.py should be installed (currently using default)"; fi
-
-PYTHON_LIB_DIR=${PYTHON_LIB_DIR:-$VIRTUAL_ENV/lib/python2.7/site-packages/}
+PREFIX=${PREFIX:-${HOME}/.local}
+PYTHON_LIB_DIR=${PYTHON_LIB_DIR:-$PREFIX/lib/python2.7/site-packages/}
 
 # Create folder for liggghts executable storage
-mkdir -p $HOME/.local/bin
-export PATH=$PATH:$HOME/.local/bin
+mkdir -p $PREFIX/bin
+export PATH=$PATH:$PREFIX/bin
 
 echo "Installing python LIGGGHTS wrapper to '$PYTHON_LIB_DIR'"
-
 
 echo "Checking out the most recent release of liggghts - 3.4.0 from 17 May 2016"
 git clone --branch 3.4.0 --depth 1 git://github.com/CFDEMproject/LIGGGHTS-PUBLIC.git myliggghts
@@ -25,7 +23,7 @@ echo "Building LIGGGHTS executable"
 pushd myliggghts/src
 make -j 2 fedora
 ln -s lgt_fedora liggghts
-cp lgt_fedora $HOME/.local/bin/liggghts
+cp lgt_fedora $PREFIX/bin/liggghts
 
 echo "Making shared library for LIGGGHTS python wrapper"
 make makeshlib
