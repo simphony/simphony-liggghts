@@ -2,7 +2,10 @@
 set -e
 
 PREFIX=${PREFIX:-${HOME}/.local}
-PYTHON_LIB_DIR=${PYTHON_LIB_DIR:-$PREFIX/lib/python2.7/site-packages/}
+PYTHON_SITE_DIR=`python -c "import site; print site.USER_SITE"`
+
+if [ -z "$PYTHON_LIB_DIR" ]; then echo "Set PYTHON_LIB_DIR variable to location of where LIGGGHTS shared library and liggghts.py should be installed (currently using $PYTHON_SITE_DIR)"; fi
+PYTHON_LIB_DIR=${PYTHON_LIB_DIR:-$PYTHON_SITE_DIR}
 
 # Create folder for liggghts executable storage
 mkdir -p $PREFIX/bin
