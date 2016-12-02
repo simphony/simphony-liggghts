@@ -2,9 +2,9 @@
 set -e
 
 PREFIX=${PREFIX:-${HOME}/.local}
-python --version
-PYTHON_SITE_DIR=`python -c "import site; print site.getsitepackages()[0]"`
-
+sys.prefix
+# Cannot use site, because getsitepackages is not present under virtual envs
+PYTHON_SITE_DIR=`python -c "import sys, os; print os.path.join(sys.prefix, 'lib', 'python'+('.'.join([str(x) for x in sys.version_info[0:2]])), 'site-packages')"`
 if [ -z "$PYTHON_LIB_DIR" ]; then echo "Set PYTHON_LIB_DIR variable to location of where LIGGGHTS shared library and liggghts.py should be installed (currently using $PYTHON_SITE_DIR)"; fi
 PYTHON_LIB_DIR=${PYTHON_LIB_DIR:-$PYTHON_SITE_DIR}
 
