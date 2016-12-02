@@ -9,7 +9,7 @@ PYTHON_LIB_DIR=${PYTHON_LIB_DIR:-$PYTHON_SITE_DIR}
 
 # Create folder for liggghts executable storage
 mkdir -p $PREFIX/bin
-mkdir -pf $PYTHON_LIB_DIR
+mkdir -p $PYTHON_LIB_DIR
 export PATH=$PATH:$PREFIX/bin
 
 echo "Installing python LIGGGHTS wrapper to '$PYTHON_LIB_DIR'"
