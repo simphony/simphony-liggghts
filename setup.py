@@ -33,6 +33,6 @@ setup(
     entry_points={
         'simphony.engine': ['liggghts = simliggghts']},
     packages=find_packages(),
-    install_requires=["simphony >= 0.3.0",
+    install_requires=["simphony ~= 0.4",
                       "pyyaml >= 3.11"]
     )
