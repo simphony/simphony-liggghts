@@ -1,7 +1,6 @@
 import os
 
 from simphony.core.cuba import CUBA
-from simphony.core.cuds_item import CUDSItem
 from simphony.core.data_container import DataContainer
 from simphony.cuds.particles import Particles, Particle
 
@@ -170,7 +169,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
             name of particle container
 
         """
-        return self._pc_cache[uname].get_particle(uid)
+        return self._pc_cache[uname].get(uid)
 
     def update_particles(self, iterable, uname):
         """Update particles
@@ -238,7 +237,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
             non-changing unique name of particles
 
         """
-        return self._pc_cache[uname].count_of(CUDSItem.PARTICLE)
+        return self._pc_cache[uname].count_of(CUBA.PARTICLE)
 
     def flush(self, input_data_filename):
         """flush to file
@@ -308,7 +307,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
         for liggghts_id, values in atoms.iteritems():
             uname, uid = self._liggghtsid_to_uid[liggghts_id]
             cache_pc = self._pc_cache[uname]
-            p = cache_pc.get_particle(uid)
+            p = cache_pc.get(uid)
             p.coordinates, p.data = interpreter.convert_atom_values(values)
             p.data.update(
                 interpreter.convert_velocity_values(velocities[liggghts_id]))
@@ -337,7 +336,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
         # in oder to determine the number of types
         num_particles = sum(
             pc.count_of(
-                CUDSItem.PARTICLE) for pc in self._pc_cache.itervalues())
+                CUBA.PARTICLE) for pc in self._pc_cache.itervalues())
         types = set(pc.data[CUBA.MATERIAL_TYPE]
                     for pc in self._pc_cache.itervalues())
 
