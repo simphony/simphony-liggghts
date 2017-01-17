@@ -120,10 +120,12 @@ def _get_average_value(particles, key):
 
     keyword = KEYWORDS[CUBA(key).name]
     if keyword.shape == [1]:
-        return sum(p.data[key] for p in particles.iter_particles())/length
+        return sum(p.data[key] for p in particles.iter(
+            item_type=CUBA.PARTICLE))/length
     else:
         return tuple(map(lambda y: sum(y) / float(len(y)), zip(
-            *[p.data[key] for p in particles.iter_particles()])))
+            *[p.data[key] for p in particles.iter(
+                item_type=CUBA.PARTICLE)])))
 
 
 _explicit_sphere_style_file_contents = """LIGGGHTS data file via write_data, version 28 Jun 2014, timestep = 25000

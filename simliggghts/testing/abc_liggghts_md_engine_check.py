@@ -68,13 +68,13 @@ class ABCLiggghtsMDEngineCheck(object):
 
         # check that it was removed
         with self.assertRaises(KeyError):
-            particles.get_particle(removed_particle.uid)
+            particles.get(removed_particle.uid)
 
         self.wrapper.run()
 
         # check that it stayed removed
         with self.assertRaises(KeyError):
-            particles.get_particle(removed_particle.uid)
+            particles.get(removed_particle.uid)
 
     def test_0_step_run(self):
         # CM
