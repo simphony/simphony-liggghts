@@ -226,7 +226,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
             uids is None then all particles will be iterated over.
 
         """
-        return self._pc_cache[uname].iter_particles(uids)
+        return self._pc_cache[uname].iter(uids, item_type=CUBA.PARTICLE)
 
     def number_of_particles(self, uname):
         """Get number of particles in a container
