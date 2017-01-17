@@ -125,19 +125,21 @@ class LiggghtsParticles(ABCParticles):
         """Get bond
 
         """
-        raise NotImplementedError
+        raise KeyError("get bond not implemented. "
+                       "uid {} not found".format(uid))
 
     def _remove_bonds(self, uid):
         """Remove bond
 
         """
-        raise NotImplementedError
+        raise KeyError("remove bond not implemented. "
+                       "uid {} not found".format(uid))
 
     def _has_bond(self, uid):
         """Has bond
 
         """
-        raise NotImplementedError
+        return False
 
     def _iter_bonds(self, uids=None):
         """Get iterator over bonds

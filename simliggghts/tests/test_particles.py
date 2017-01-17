@@ -48,8 +48,8 @@ class TestFileIoParticlesAddParticles(
         for particle in particles:
             uid = particle.uid
             self.assertIn(uid, uids)
-            self.assertTrue(container.has_particle(uid))
-            self.assertEqual(container.get_particle(uid), particle)
+            self.assertTrue(container.has(uid))
+            self.assertEqual(container.get(uid), particle)
 
 
 class TestInternalParticlesAddParticles(
@@ -81,8 +81,8 @@ class TestInternalParticlesAddParticles(
         for particle in particles:
             uid = particle.uid
             self.assertIn(uid, uids)
-            self.assertTrue(container.has_particle(uid))
-            self.assertEqual(container.get_particle(uid), particle)
+            self.assertTrue(container.has(uid))
+            self.assertEqual(container.get(uid), particle)
 
 
 class TestFileIoParticlesManipulatingParticles(
