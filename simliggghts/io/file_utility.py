@@ -92,7 +92,7 @@ def read_data_file(filename, atom_style=None):
         atom_type = p.data[CUBA.MATERIAL_TYPE]
         del p.data[CUBA.MATERIAL_TYPE]
 
-        type_to_particles_map[atom_type].add_particles([p])
+        type_to_particles_map[atom_type].add([p])
 
     return type_to_particles_map.values()
 
