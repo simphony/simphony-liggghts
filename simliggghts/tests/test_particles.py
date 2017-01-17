@@ -42,7 +42,7 @@ class TestFileIoParticlesAddParticles(
         particles = create_particles_with_id(restrict=self.supported_cuba())
 
         # when
-        uids = container.add_particles(particles)
+        uids = container.add(particles)
 
         # then
         for particle in particles:
@@ -75,7 +75,7 @@ class TestInternalParticlesAddParticles(
         particles = create_particles_with_id(restrict=self.supported_cuba())
 
         # when
-        uids = container.add_particles(particles)
+        uids = container.add(particles)
 
         # then
         for particle in particles:

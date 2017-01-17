@@ -22,8 +22,8 @@ def _create_pc(name):
     data[CUBA.VELOCITY] = (0.0, 0.0, 0.0)
     data[CUBA.ANGULAR_VELOCITY] = (0.0, 0.0, 0.0)
 
-    pc.add_particles([Particle(coordinates=(1.01, 1.01, 1.01), data=data),
-                      Particle(coordinates=(1.02, 1.02, 1.02), data=data)])
+    pc.add([Particle(coordinates=(1.01, 1.01, 1.01), data=data),
+            Particle(coordinates=(1.02, 1.02, 1.02), data=data)])
 
     return pc
 

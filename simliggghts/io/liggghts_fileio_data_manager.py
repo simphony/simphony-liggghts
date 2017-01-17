@@ -147,7 +147,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
         for p in particles.iter(item_type=CUBA.PARTICLE):
             pc.add([p])
 
-        for b in particles.iter_bonds():
+        for b in particles.iter(item_type=CUBA.BOND):
             pc.add([b])
 
         self._pc_cache[uname] = pc
