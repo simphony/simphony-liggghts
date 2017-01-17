@@ -144,11 +144,11 @@ class LiggghtsFileIoDataManager(ABCDataManager):
         pc = Particles(name="_")
         pc.data = DataContainer(particles.data)
 
-        for p in particles.iter_particles():
-            pc.add_particles([p])
+        for p in particles.iter(item_type=CUBA.PARTICLE):
+            pc.add([p])
 
         for b in particles.iter_bonds():
-            pc.add_bonds([b])
+            pc.add([b])
 
         self._pc_cache[uname] = pc
 
@@ -175,18 +175,18 @@ class LiggghtsFileIoDataManager(ABCDataManager):
         """Update particles
 
         """
-        self._pc_cache[uname].update_particles(
+        self._pc_cache[uname].update(
             _filter_unsupported_data(iterable, self._supported_cuba))
 
     def add_particles(self, iterable, uname):
         """Add particles
 
         """
-        uids = self._pc_cache[uname].add_particles(iterable)
+        uids = self._pc_cache[uname].add(iterable)
 
         # filter the cached particles of unsupported CUBA
-        self._pc_cache[uname].update_particles(_filter_unsupported_data(
-            self._pc_cache[uname].iter_particles(uids), self._supported_cuba))
+        self._pc_cache[uname].update(_filter_unsupported_data(
+            self._pc_cache[uname].iter(uids), self._supported_cuba))
 
         return uids
 
@@ -201,7 +201,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
             name of particle container
 
         """
-        self._pc_cache[uname].remove_particles([uid])
+        self._pc_cache[uname].remove([uid])
 
     def has_particle(self, uid, uname):
         """Has particle
@@ -214,7 +214,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
             name of particle container
 
         """
-        return self._pc_cache[uname].has_particle(uid)
+        return self._pc_cache[uname].has(uid)
 
     def iter_particles(self, uname, uids=None):
         """Iterate over the particles of a certain type

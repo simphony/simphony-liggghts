@@ -34,7 +34,7 @@ def _get_particle(wrapper):
 
     """
     for particles in wrapper.iter_datasets():
-        for p in particles.iter_particles():
+        for p in particles.iter(item_type=CUBA.PARTICLE):
             return p, particles
     else:
         raise RuntimeError("could not find a particle to test with")
@@ -96,7 +96,7 @@ class ABCLiggghtsMDEngineCheck(object):
             p.data[CUBA.DENSITY] = (0.5)
             p.data[CUBA.RADIUS] = (0.5)
             p.data[CUBA.EXTERNAL_APPLIED_FORCE] = (0.0, 0.0, 0.0)
-            uids = foo.add_particles([p])
+            uids = foo.add([p])
             particles_uids.extend(uids)
 
         # add to wrapper
@@ -108,10 +108,10 @@ class ABCLiggghtsMDEngineCheck(object):
         uid_to_update = particles_uids[len(particles_uids)/2-1]
 
         foo_w.remove_particles([uid_to_remove])
-        foo.remove_particles([uid_to_remove])
+        foo.remove([uid_to_remove])
 
         # update another point
-        p = foo.get_particle(uid_to_update)
+        p = foo.get(uid_to_update)
         p.coordinates = (1.42, 1.42, 1.42)
         p.data[CUBA.VELOCITY] = (0.0042, 0.0042, 0.0042)
         p.data[CUBA.ANGULAR_VELOCITY] = (0.0042, 0.0042, 0.0042)
@@ -119,11 +119,11 @@ class ABCLiggghtsMDEngineCheck(object):
         p.data[CUBA.RADIUS] = (0.4)
         p.data[CUBA.EXTERNAL_APPLIED_FORCE] = (0.25, 0.25, 0.25)
 
-        foo.update_particles([p])
+        foo.update([p])
         foo_w.update_particles([p])
 
         # check if information matches up
-        for p in foo.iter_particles():
+        for p in foo.iter(item_type=CUBA.PARTICLE):
             p_w = foo_w.get_particle(p.uid)
             assert_almost_equal(p_w.coordinates, p.coordinates)
             assert_almost_equal(p_w.data[CUBA.VELOCITY], p.data[CUBA.VELOCITY])
@@ -139,7 +139,7 @@ class ABCLiggghtsMDEngineCheck(object):
         self.wrapper.run()
 
         # check if information matches up
-        for p in foo.iter_particles():
+        for p in foo.iter(item_type=CUBA.PARTICLE):
             p_w = foo_w.get_particle(p.uid)
 
             assert_almost_equal(p_w.coordinates, p.coordinates)
@@ -153,19 +153,19 @@ class ABCLiggghtsMDEngineCheck(object):
                                 p.data[CUBA.EXTERNAL_APPLIED_FORCE])
 
         # update again
-        p = foo.get_particle(uid_to_update)
+        p = foo.get(uid_to_update)
         p.coordinates = (1.24, 1.24, 1.24)
-        foo.update_particles([p])
+        foo.update([p])
         foo_w.update_particles([p])
 
         self.wrapper.run()
         # check if information matches up
-        for p in foo.iter_particles():
+        for p in foo.iter(item_type=CUBA.PARTICLE):
             p_w = foo_w.get_particle(p.uid)
             assert_almost_equal(p_w.coordinates, p.coordinates)
 
         self.wrapper.run()
-        for p in foo.iter_particles():
+        for p in foo.iter(item_type=CUBA.PARTICLE):
             p_w = foo_w.get_particle(p.uid)
             assert_almost_equal(p_w.coordinates, p.coordinates)
 

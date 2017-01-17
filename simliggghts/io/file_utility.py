@@ -1,7 +1,6 @@
 from simphony.cuds.particles import Particle, Particles
 from simphony.core.data_container import DataContainer
 from simphony.core.cuba import CUBA
-from simphony.core.cuds_item import CUDSItem
 
 from ..common import globals
 from .liggghts_data_file_parser import LiggghtsDataFileParser
@@ -122,7 +121,7 @@ def write_data_file(filename, particles_list, atom_style=AtomStyle.GRANULAR):
     """
 
     num_particles = sum(
-        pc.count_of(CUDSItem.PARTICLE) for pc in particles_list)
+        pc.count_of(CUBA.PARTICLE) for pc in particles_list)
     types = set(pc.data[CUBA.MATERIAL_TYPE] for pc in particles_list)
 
     box = get_box([pc.data_extension for pc in particles_list])
@@ -140,7 +139,7 @@ def write_data_file(filename, particles_list, atom_style=AtomStyle.GRANULAR):
 
     for particles in particles_list:
         material_type = particles.data[CUBA.MATERIAL_TYPE]
-        for p in particles.iter_particles():
+        for p in particles.iter(item_type=CUBA.PARTICLE):
             writer.write_atom(p, material_type)
     writer.close()
 

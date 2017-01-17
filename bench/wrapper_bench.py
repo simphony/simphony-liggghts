@@ -3,7 +3,6 @@ from collections import namedtuple
 from simphony.engine import liggghts
 from simphony.bench.util import bench
 from simphony.core.cuba import CUBA
-from simphony.core.cuds_item import CUDSItem
 
 from .util import get_particles
 from ..testing.md_example_configurator import MDExampleConfigurator
@@ -80,7 +79,7 @@ if __name__ == '__main__':
             # test different run scenarios
             particles = get_particles(y_range)
             number_particles = sum(p.count_of(
-                CUDSItem.PARTICLE) for p in particles)
+                CUBA.PARTICLE) for p in particles)
             number_time_steps = 10
 
             for test in run_wrapper_tests:
