@@ -64,7 +64,7 @@ class ABCLiggghtsMDEngineCheck(object):
         MDExampleConfigurator.configure_wrapper(self.wrapper)
 
         removed_particle, particles = _get_particle(self.wrapper)
-        particles.remove_particles([removed_particle.uid])
+        particles.remove([removed_particle.uid])
 
         # check that it was removed
         with self.assertRaises(KeyError):
@@ -107,7 +107,7 @@ class ABCLiggghtsMDEngineCheck(object):
         uid_to_remove = particles_uids[len(particles_uids)/2]
         uid_to_update = particles_uids[len(particles_uids)/2-1]
 
-        foo_w.remove_particles([uid_to_remove])
+        foo_w.remove([uid_to_remove])
         foo.remove([uid_to_remove])
 
         # update another point
@@ -120,11 +120,11 @@ class ABCLiggghtsMDEngineCheck(object):
         p.data[CUBA.EXTERNAL_APPLIED_FORCE] = (0.25, 0.25, 0.25)
 
         foo.update([p])
-        foo_w.update_particles([p])
+        foo_w.update([p])
 
         # check if information matches up
         for p in foo.iter(item_type=CUBA.PARTICLE):
-            p_w = foo_w.get_particle(p.uid)
+            p_w = foo_w.get(p.uid)
             assert_almost_equal(p_w.coordinates, p.coordinates)
             assert_almost_equal(p_w.data[CUBA.VELOCITY], p.data[CUBA.VELOCITY])
             assert_almost_equal(p_w.data[CUBA.ANGULAR_VELOCITY],
@@ -140,7 +140,7 @@ class ABCLiggghtsMDEngineCheck(object):
 
         # check if information matches up
         for p in foo.iter(item_type=CUBA.PARTICLE):
-            p_w = foo_w.get_particle(p.uid)
+            p_w = foo_w.get(p.uid)
 
             assert_almost_equal(p_w.coordinates, p.coordinates)
             assert_almost_equal(p_w.data[CUBA.VELOCITY], p.data[CUBA.VELOCITY])
@@ -156,17 +156,17 @@ class ABCLiggghtsMDEngineCheck(object):
         p = foo.get(uid_to_update)
         p.coordinates = (1.24, 1.24, 1.24)
         foo.update([p])
-        foo_w.update_particles([p])
+        foo_w.update([p])
 
         self.wrapper.run()
         # check if information matches up
         for p in foo.iter(item_type=CUBA.PARTICLE):
-            p_w = foo_w.get_particle(p.uid)
+            p_w = foo_w.get(p.uid)
             assert_almost_equal(p_w.coordinates, p.coordinates)
 
         self.wrapper.run()
         for p in foo.iter(item_type=CUBA.PARTICLE):
-            p_w = foo_w.get_particle(p.uid)
+            p_w = foo_w.get(p.uid)
             assert_almost_equal(p_w.coordinates, p.coordinates)
 
     def test_run_incomplete_cm(self):
