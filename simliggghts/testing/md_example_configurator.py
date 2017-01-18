@@ -117,7 +117,7 @@ class MDExampleConfigurator:
                 p.data[CUBA.DENSITY] = (1.0)
                 p.data[CUBA.RADIUS] = (1.0)
                 p.data[CUBA.EXTERNAL_APPLIED_FORCE] = (0.0, 0.0, 0.0)
-                pc.add_particles([p])
+                pc.add([p])
 
             MDExampleConfigurator.add_configure_particles(wrapper,
                                                           pc,

@@ -161,7 +161,7 @@ class LiggghtsInternalDataManager(ABCDataManager):
         if CUBA.MATERIAL_TYPE not in self._pc_data[uname]:
             raise ValueError("Missing the required CUBA.MATERIAL_TYPE")
 
-        self._add_atoms(iterable=particles.iter_particles(),
+        self._add_atoms(iterable=particles.iter(item_type=CUBA.PARTICLE),
                         uname=uname,
                         safe=True)
 

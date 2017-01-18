@@ -42,14 +42,14 @@ class TestFileIoParticlesAddParticles(
         particles = create_particles_with_id(restrict=self.supported_cuba())
 
         # when
-        uids = container.add_particles(particles)
+        uids = container.add(particles)
 
         # then
         for particle in particles:
             uid = particle.uid
             self.assertIn(uid, uids)
-            self.assertTrue(container.has_particle(uid))
-            self.assertEqual(container.get_particle(uid), particle)
+            self.assertTrue(container.has(uid))
+            self.assertEqual(container.get(uid), particle)
 
 
 class TestInternalParticlesAddParticles(
@@ -75,14 +75,14 @@ class TestInternalParticlesAddParticles(
         particles = create_particles_with_id(restrict=self.supported_cuba())
 
         # when
-        uids = container.add_particles(particles)
+        uids = container.add(particles)
 
         # then
         for particle in particles:
             uid = particle.uid
             self.assertIn(uid, uids)
-            self.assertTrue(container.has_particle(uid))
-            self.assertEqual(container.get_particle(uid), particle)
+            self.assertTrue(container.has(uid))
+            self.assertEqual(container.get(uid), particle)
 
 
 class TestFileIoParticlesManipulatingParticles(

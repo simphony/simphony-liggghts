@@ -6,7 +6,6 @@ import os
 from numpy.testing import assert_almost_equal
 
 from simphony.core.cuba import CUBA
-from simphony.core.cuds_item import CUDSItem
 from simphony.core.keywords import KEYWORDS
 
 from simliggghts.io.file_utility import (read_data_file,
@@ -39,8 +38,8 @@ class TestFileUtility(unittest.TestCase):
 
         particles1 = particles_list[0]
         particles2 = particles_list[1]
-        self.assertEqual(2, particles1.count_of(CUDSItem.PARTICLE))
-        self.assertEqual(1, particles2.count_of(CUDSItem.PARTICLE))
+        self.assertEqual(2, particles1.count_of(CUBA.PARTICLE))
+        self.assertEqual(1, particles2.count_of(CUBA.PARTICLE))
         self.assertEqual(str(particles1.data[CUBA.MATERIAL_TYPE]),
                          particles1.name)
         assert_almost_equal(
@@ -53,7 +52,7 @@ class TestFileUtility(unittest.TestCase):
             particles1.data_extension[CUBAExtension.BOX_VECTORS],
             box)
 
-        for p in particles1.iter_particles():
+        for p in particles1.iter(item_type=CUBA.PARTICLE):
             assert_almost_equal(p.data[CUBA.ANGULAR_VELOCITY], [0.0, 0.0, 1.0])
             assert_almost_equal(p.data[CUBA.VELOCITY], [5.0, 0.0, 0.0])
             assert_almost_equal(p.data[CUBA.RADIUS], 0.5/2)
@@ -107,8 +106,8 @@ def _compare_particles_averages(particles,
     """
     self = testcase
 
-    len_particles = particles.count_of(CUDSItem.PARTICLE)
-    len_reference = reference.count_of(CUDSItem.PARTICLE)
+    len_particles = particles.count_of(CUBA.PARTICLE)
+    len_reference = reference.count_of(CUBA.PARTICLE)
     self.assertEqual(len_particles, len_reference)
     for key in attributes_keys:
         average_particles = _get_average_value(particles, key)
@@ -117,14 +116,16 @@ def _compare_particles_averages(particles,
 
 
 def _get_average_value(particles, key):
-    length = particles.count_of(CUDSItem.PARTICLE)
+    length = particles.count_of(CUBA.PARTICLE)
 
     keyword = KEYWORDS[CUBA(key).name]
     if keyword.shape == [1]:
-        return sum(p.data[key] for p in particles.iter_particles())/length
+        return sum(p.data[key] for p in particles.iter(
+            item_type=CUBA.PARTICLE))/length
     else:
         return tuple(map(lambda y: sum(y) / float(len(y)), zip(
-            *[p.data[key] for p in particles.iter_particles()])))
+            *[p.data[key] for p in particles.iter(
+                item_type=CUBA.PARTICLE)])))
 
 
 _explicit_sphere_style_file_contents = """LIGGGHTS data file via write_data, version 28 Jun 2014, timestep = 25000

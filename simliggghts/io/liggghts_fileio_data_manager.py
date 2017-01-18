@@ -1,7 +1,6 @@
 import os
 
 from simphony.core.cuba import CUBA
-from simphony.core.cuds_item import CUDSItem
 from simphony.core.data_container import DataContainer
 from simphony.cuds.particles import Particles, Particle
 
@@ -145,11 +144,11 @@ class LiggghtsFileIoDataManager(ABCDataManager):
         pc = Particles(name="_")
         pc.data = DataContainer(particles.data)
 
-        for p in particles.iter_particles():
-            pc.add_particles([p])
+        for p in particles.iter(item_type=CUBA.PARTICLE):
+            pc.add([p])
 
-        for b in particles.iter_bonds():
-            pc.add_bonds([b])
+        for b in particles.iter(item_type=CUBA.BOND):
+            pc.add([b])
 
         self._pc_cache[uname] = pc
 
@@ -170,24 +169,24 @@ class LiggghtsFileIoDataManager(ABCDataManager):
             name of particle container
 
         """
-        return self._pc_cache[uname].get_particle(uid)
+        return self._pc_cache[uname].get(uid)
 
     def update_particles(self, iterable, uname):
         """Update particles
 
         """
-        self._pc_cache[uname].update_particles(
+        self._pc_cache[uname].update(
             _filter_unsupported_data(iterable, self._supported_cuba))
 
     def add_particles(self, iterable, uname):
         """Add particles
 
         """
-        uids = self._pc_cache[uname].add_particles(iterable)
+        uids = self._pc_cache[uname].add(iterable)
 
         # filter the cached particles of unsupported CUBA
-        self._pc_cache[uname].update_particles(_filter_unsupported_data(
-            self._pc_cache[uname].iter_particles(uids), self._supported_cuba))
+        self._pc_cache[uname].update(_filter_unsupported_data(
+            self._pc_cache[uname].iter(uids), self._supported_cuba))
 
         return uids
 
@@ -202,7 +201,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
             name of particle container
 
         """
-        self._pc_cache[uname].remove_particles([uid])
+        self._pc_cache[uname].remove([uid])
 
     def has_particle(self, uid, uname):
         """Has particle
@@ -215,7 +214,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
             name of particle container
 
         """
-        return self._pc_cache[uname].has_particle(uid)
+        return self._pc_cache[uname].has(uid)
 
     def iter_particles(self, uname, uids=None):
         """Iterate over the particles of a certain type
@@ -227,7 +226,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
             uids is None then all particles will be iterated over.
 
         """
-        return self._pc_cache[uname].iter_particles(uids)
+        return self._pc_cache[uname].iter(uids, item_type=CUBA.PARTICLE)
 
     def number_of_particles(self, uname):
         """Get number of particles in a container
@@ -238,7 +237,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
             non-changing unique name of particles
 
         """
-        return self._pc_cache[uname].count_of(CUDSItem.PARTICLE)
+        return self._pc_cache[uname].count_of(CUBA.PARTICLE)
 
     def flush(self, input_data_filename):
         """flush to file
@@ -308,7 +307,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
         for liggghts_id, values in atoms.iteritems():
             uname, uid = self._liggghtsid_to_uid[liggghts_id]
             cache_pc = self._pc_cache[uname]
-            p = cache_pc.get_particle(uid)
+            p = cache_pc.get(uid)
             p.coordinates, p.data = interpreter.convert_atom_values(values)
             p.data.update(
                 interpreter.convert_velocity_values(velocities[liggghts_id]))
@@ -337,7 +336,7 @@ class LiggghtsFileIoDataManager(ABCDataManager):
         # in oder to determine the number of types
         num_particles = sum(
             pc.count_of(
-                CUDSItem.PARTICLE) for pc in self._pc_cache.itervalues())
+                CUBA.PARTICLE) for pc in self._pc_cache.itervalues())
         types = set(pc.data[CUBA.MATERIAL_TYPE]
                     for pc in self._pc_cache.itervalues())
 

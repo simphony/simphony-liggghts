@@ -1,5 +1,5 @@
+from simphony.core.cuba import CUBA
 from simphony.cuds.abc_particles import ABCParticles
-from simphony.core.cuds_item import CUDSItem
 
 
 class LiggghtsParticles(ABCParticles):
@@ -46,7 +46,7 @@ class LiggghtsParticles(ABCParticles):
 
     # Particle methods ######################################################
 
-    def add_particles(self, iterable):
+    def _add_particles(self, iterable):
         """Adds a set of particles from the provided iterable
         to the container.
 
@@ -75,32 +75,32 @@ class LiggghtsParticles(ABCParticles):
         """
         return self._manager.add_particles(iterable, self._uname)
 
-    def update_particles(self, iterable):
+    def _update_particles(self, iterable):
         """Update particles
 
         """
         self._manager.update_particles(iterable, self._uname)
 
-    def get_particle(self, uid):
+    def _get_particle(self, uid):
         """Get particle
 
         """
         return self._manager.get_particle(uid, self._uname)
 
-    def remove_particles(self, uids):
+    def _remove_particles(self, uids):
         """Remove particles
 
         """
         for uid in uids:
             self._manager.remove_particle(uid, self._uname)
 
-    def has_particle(self, uid):
+    def _has_particle(self, uid):
         """Has particle
 
         """
         return self._manager.has_particle(uid, self._uname)
 
-    def iter_particles(self, uids=None):
+    def _iter_particles(self, uids=None):
         """Get iterator over particles
 
         """
@@ -109,37 +109,39 @@ class LiggghtsParticles(ABCParticles):
 
     # Bond methods #######################################################
 
-    def add_bonds(self, bonds):
+    def _add_bonds(self, bonds):
         """Add bonds
 
         """
         raise NotImplementedError
 
-    def update_bonds(self, bonds):
+    def _update_bonds(self, bonds):
         """Update particle
 
         """
         raise NotImplementedError
 
-    def get_bond(self, uid):
+    def _get_bond(self, uid):
         """Get bond
 
         """
-        raise NotImplementedError
+        raise KeyError("get bond not implemented. "
+                       "uid {} not found".format(uid))
 
-    def remove_bonds(self, uid):
+    def _remove_bonds(self, uid):
         """Remove bond
 
         """
-        raise NotImplementedError
+        raise KeyError("remove bond not implemented. "
+                       "uid {} not found".format(uid))
 
-    def has_bond(self, uid):
+    def _has_bond(self, uid):
         """Has bond
 
         """
-        raise NotImplementedError
+        return False
 
-    def iter_bonds(self, uids=None):
+    def _iter_bonds(self, uids=None):
         """Get iterator over bonds
 
         """
@@ -152,8 +154,8 @@ class LiggghtsParticles(ABCParticles):
 
         Parameters
         ----------
-        item_type : CUDSItem
-            The CUDSItem enum of the type of the items to return the count of.
+        item_type : CUBA enum
+            The CUBA enum of the type of the items to return the count of.
 
         Returns
         -------
@@ -167,9 +169,9 @@ class LiggghtsParticles(ABCParticles):
             container.
 
         """
-        if item_type == CUDSItem.PARTICLE:
+        if item_type == CUBA.PARTICLE:
             return self._manager.number_of_particles(self._uname)
-        elif item_type == CUDSItem.BOND:
+        elif item_type == CUBA.BOND:
             return 0
         else:
             error_str = "Trying to obtain count a of non-supported item: {}"
