@@ -25,7 +25,7 @@ Requirements
 ------------
 
 - pyyaml >= 3.11
-- `simphony-common`_ >= 0.2.0
+- `simphony-common`_ ~= 0.5.0
 
 Optional requirements
 ~~~~~~~~~~~~~~~~~~~~~
@@ -94,7 +94,7 @@ Directory structure
 -------------------
 
 - simliggghts -- holds the liggghts wrapper implementation
-    
+
     - bench - benchmarking
     - common - contains general global files
     - config - holds configuration related files
