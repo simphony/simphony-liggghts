@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 with open('README.rst', 'r') as readme:
     README_TEXT = readme.read()
 
-VERSION = '0.2.0'
+VERSION = '0.2.1'
 
 
 def write_version_py(filename=None):
@@ -33,6 +33,6 @@ setup(
     entry_points={
         'simphony.engine': ['liggghts = simliggghts']},
     packages=find_packages(),
-    install_requires=["simphony~=0.5",
+    install_requires=["simphony>=0.5",
                       "pyyaml >= 3.11"]
     )
