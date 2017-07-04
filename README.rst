@@ -119,4 +119,4 @@ Enthought Deployment Manager packages can be created with::
     python edmsetup.py egg
 
 
-See documentation in simphonyproject/buildrecipes-common for more information
+See documentation in simphony/buildrecipes-common for more information
