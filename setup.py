@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 with open('README.rst', 'r') as readme:
     README_TEXT = readme.read()
 
-VERSION = '0.1.6'
+from packageinfo import VERSION, NAME
 
 
 def write_version_py(filename=None):
@@ -25,7 +25,7 @@ version = '%s'
 write_version_py()
 
 setup(
-    name='simliggghts',
+    name=NAME,
     version=VERSION,
     author='SimPhoNy, EU FP7 Project (Nr. 604005) www.simphony-project.eu',
     description='The liggghts wrapper for the SimPhoNy framework',
