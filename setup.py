@@ -1,11 +1,10 @@
 import os
 
 from setuptools import setup, find_packages
+from packageinfo import VERSION, NAME
 
 with open('README.rst', 'r') as readme:
     README_TEXT = readme.read()
-
-from packageinfo import VERSION, NAME
 
 
 def write_version_py(filename=None):

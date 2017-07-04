@@ -6,7 +6,7 @@ import subprocess
 from packageinfo import BUILD, VERSION, NAME
 
 # The version of the buildcommon to checkout.
-BUILDCOMMONS_VERSION="v0.2"
+BUILDCOMMONS_VERSION = "v0.2"
 
 
 def bootstrap_devenv():
