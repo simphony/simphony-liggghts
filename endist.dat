@@ -1,0 +1,5 @@
+packages = [
+  'lammps_liggghts_python 13864',
+  'simphony 0.4.1',
+  'pyyaml 3.12'
+]
